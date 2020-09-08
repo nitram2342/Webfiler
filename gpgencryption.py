@@ -141,16 +141,3 @@ class GPGEncryption:
         return None
 
 
-if __name__ == "__main__":
-    home_dir = "daten/gpg"
-    recipient_key_fprint = "900611B00B54591F720E5BF656F9EDB79BE4CD06"
-    passphrase = "secret"
-
-    enc = GPGEncryption(home_dir)
-    enc.download_key(recipient_key_fprint)
-
-    # enc = GPGEncryption(home_dir, recipient_key_fprint, passphrase)
-
-    # status = enc.encrypt_file(recipient_key_fprint, '/etc/passwd', '/tmp/passwd.gpg')
-    # cipher_text = enc.encrypt_text(recipient_key_fprint, 'hello')
-    # print(cipher_text)
