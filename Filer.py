@@ -48,8 +48,8 @@ app.config["LANGUAGES"] = ["en", "de"]
 filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
 
-gpg_enable_upload_encryption = True  # encrypt customer-uploaded data via GPG
-gpg_recipient_fprint = getenv("GPG_RECIPIENT_FPRINT", None)
+# encrypt customer-uploaded data via GPG, enabled if there is a key
+gpg_recipient_fprint = getenv("GPG_RECIPIENT_FPRINT", None) 
 gpg_key_server = getenv("GPG_KEY_SERVER", "keys.openpgp.org"
 
 basedir = getenv("FILER_BASEDIR", "./Daten")
@@ -199,7 +199,7 @@ def mandant(user):
 def upload_mandant_as_mandant(user):
     return _upload_mandant(
         user,
-        encrypt=(gpg_enable_upload_encryption and gpg_recipient_fprint is not None),
+        encrypt=(gpg_recipient_fprint is not None),
     )
 
 
@@ -360,7 +360,7 @@ if app.config["SECRET_KEY"] is None:
     exit(1)
 
 # download GPG key if enabled
-if gpg_enable_upload_encryption and gpg_recipient_fprint is not None:
+if gpg_recipient_fprint is not None:
     enc = gpgencryption.GPGEncryption(gpg_home_dir, gpg_key_server)
     enc.download_key(gpg_recipient_fprint)
 
