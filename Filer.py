@@ -50,7 +50,7 @@ support_public_docs = True
 
 # encrypt customer-uploaded data via GPG, enabled if there is a key
 gpg_recipient_fprint = getenv("GPG_RECIPIENT_FPRINT", None) 
-gpg_key_server = getenv("GPG_KEY_SERVER", "keys.openpgp.org"
+gpg_key_server = getenv("GPG_KEY_SERVER", "keys.openpgp.org")
 
 basedir = getenv("FILER_BASEDIR", "./Daten")
 publicdir = getenv("FILER_PUBLICDIR", "Public")
