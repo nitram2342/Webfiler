@@ -92,7 +92,7 @@ window.onload = function() {
 <h2>{{_("Öffentliches Dokument hochladen")}}</h2>
 <div class="droppy">{{ dropzone.create(action='/admin') }}</div>
 
-{{ dropzone.config(nonce=nonce) }}
+{{ dropzone.config(nonce=nonce, custom_options='chunking: true, forceChunking: true, chunkSize: 100000000' if enable_chunking else "") }}
 
 {% endif -%}
 

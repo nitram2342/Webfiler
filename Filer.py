@@ -18,6 +18,7 @@ from flask import (
     redirect,
     send_from_directory,
     g,
+    make_response
 )
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_dropzone import Dropzone
@@ -48,6 +49,7 @@ app.config["LANGUAGES"] = ["en", "de"]
 
 filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
+enable_chunking=False # enable for large files
 
 # Encrypt customer-uploaded data via GPG. It is enabled if there is a
 # fingerprint defined. The key is automatically downloaded from the
@@ -107,6 +109,7 @@ def admin():
             nonce=nonce,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
+            enable_chunking=enable_chunking
         ),
         200,
         default_http_header,
@@ -127,6 +130,7 @@ def admin_dokumente(user):
             nonce=nonce,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
+            enable_chunking=enable_chunking
         ),
         200,
         default_http_header,
@@ -191,6 +195,7 @@ def mandant(user):
             nonce=nonce,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
+            enable_chunking=enable_chunking
         ),
         200,
         default_http_header,
@@ -225,20 +230,33 @@ def _upload_mandant(user=None, encrypt=False):
         if key.startswith("file"):
             filename = secure_filename(f.filename)
             if user:
-                username = secure_filename(user)
-                pathname = path.join(basedir, documentsdir, username, filename)
-
-                if encrypt:
-                    pathname += ".gpg"
-                    enc = gpgencryption.GPGEncryption(gpg_home_dir, gpg_key_server)
-                    enc.encrypt_fh(gpg_recipient_fprint, f, pathname)  # no signing
-
-                else:
-                    f.save(pathname)
+                pathname = path.join(basedir, documentsdir, secure_filename(user), filename)
             else:
-                f.save(path.join(basedir, publicdir, filename))
-    return "upload template"
+                pathname = path.join(basedir, publicdir, filename)
+            
+            store_file(pathname, f.stream, encrypt,
+                       int(request.form['dzchunkindex']) if enable_chunking else 0,
+                       int(request.form['dzchunkbyteoffset']) if enable_chunking else 0,
+                       int(request.form['dztotalchunkcount']) if enable_chunking else 0)
+            
+    return "upload complete"
 
+def store_file(pathname, fstream, encrypt, current_chunk, offset, total_chunks):
+
+    if encrypt:
+        # When uploading files in chunks, we encrypt each chunk
+        # individually. Then we do not need to work with temp files,
+        # and copy files here and there and to remove them afterwards.
+        pathname += f".%03d.gpg" % current_chunk
+        enc = gpgencryption.GPGEncryption(gpg_home_dir, gpg_key_server)
+        enc.encrypt_fh(gpg_recipient_fprint, fstream, pathname)  # no signing
+
+    else:
+        with open(pathname, 'ab') as fh_out:
+            fh_out.seek(offset)
+            fh_out.write(fstream.read())
+
+    return make_response(("Data uploaded successfully", 200))
 
 # handle CSRF error
 @app.errorhandler(CSRFError)
