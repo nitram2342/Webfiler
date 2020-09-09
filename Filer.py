@@ -34,6 +34,7 @@ app.config["SECRET_KEY"] = getenv("SECRET_KEY", None)
 
 app.config["DROPZONE_ALLOWED_FILE_CUSTOM"] = True
 app.config["DROPZONE_ALLOWED_FILE_TYPE"] = ""
+app.config['DROPZONE_MAX_FILE_SIZE'] = int(getenv("DROPZONE_MAX_FILE_SIZE", "128")) # MB
 app.config["DROPZONE_SERVE_LOCAL"] = True
 app.config["DROPZONE_ENABLE_CSRF"] = True
 app.config["WTF_CSRF_SSL_STRICT"] = False # Disable looking at referrer
