@@ -48,7 +48,13 @@ app.config["LANGUAGES"] = ["en", "de"]
 filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
 
-# encrypt customer-uploaded data via GPG, enabled if there is a key
+# Encrypt customer-uploaded data via GPG. It is enabled if there is a
+# fingerprint defined. The key is automatically downloaded from the
+# keyserver. If the key cannot be downloaded, your gpg 'dirmngr' is
+# likely not running, which is okay. You can import the key manually,
+# just run (adjust path and file names):
+# sudo -u www-data gpg --homedir /var/run/Filer/Daten/gpghome --import keyfile.asc
+
 gpg_recipient_fprint = getenv("GPG_RECIPIENT_FPRINT", None) 
 gpg_key_server = getenv("GPG_KEY_SERVER", "keys.openpgp.org")
 
