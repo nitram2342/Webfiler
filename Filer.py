@@ -49,8 +49,8 @@ filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
 
 gpg_enable_upload_encryption = True  # encrypt customer-uploaded data via GPG
-gpg_recipient_fprint = None
-gpg_key_server = "keys.openpgp.org"
+gpg_recipient_fprint = getenv("GPG_RECIPIENT_FPRINT", None)
+gpg_key_server = getenv("GPG_KEY_SERVER", "keys.openpgp.org"
 
 basedir = getenv("FILER_BASEDIR", "./Daten")
 publicdir = getenv("FILER_PUBLICDIR", "Public")
