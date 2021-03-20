@@ -56,7 +56,7 @@ support_public_docs = True
 enable_chunking=False # enable for large files
 
 # Enable 2FA for download?
-enable_2fa = True
+enable_2fa = False
 if enable_2fa:
     import pyotp
     import qrcode

@@ -40,6 +40,11 @@ window.onload = function() {
 	b.onclick = function() { document.getElementById('user').value = b.value };
     }
 
+    for (let f of document.getElementsByName("del-confirm")) {
+	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
+    }
+    
+    {% if enable_2fa %}
     for (let b of document.getElementsByName("2fa-token")) {
 	b.onclick = function() {
 	    window.location.href = '/admin/token/' + b.value;
@@ -47,13 +52,10 @@ window.onload = function() {
 	};
     }
     
-    for (let f of document.getElementsByName("del-confirm")) {
-	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
-    }
-    
     for (let f of document.getElementsByName("2fa-toggle-confirm")) {
 	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
     }
+    {% endif %}
 };  
 </script>
 </head>
@@ -67,11 +69,14 @@ window.onload = function() {
       <button class="delete">{{_("Löschen")}}</button>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
     <button class="edit" name="edit" value="{{item['name']}}">{{_("Editieren")}}</button>
+    
+    {% if enable_2fa %}
     <button class="edit" name="2fa-token" value="{{item['name']}}">{{_("Download 2FA QR")}}</button>
 
     <form action="/admin/token/toggle-state/{{item['name']}}" name="2fa-toggle-confirm" method="post">
       <button class="{{ 'disabled' if not item['2fa'] else 'edit'}}">{{_("2FA")}}</button>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
+    {% endif %}
       
     <a href="/admin/{{documentsdir}}/{{item['name']}}">{{item['name']}}</a> <small>{{_("Mandanten-URL")}}: {{url_root}}{{documentsdir}}/{{item['name']}}</small>
   </li>
