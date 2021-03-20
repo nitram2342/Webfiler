@@ -1,0 +1,27 @@
+[uwsgi]
+module = Filer:app
+plugin = python3
+master = true
+processes = 10
+enable-threads = true
+
+socket = /var/run/filer/filer.sock
+chmod-socket = 660
+vacuum = true
+virtualenv = ........../webfiler/venv
+
+socket-timeout = 600
+die-on-term = true
+
+env = DROPZONE_MAX_FILE_SIZE=5120
+env = PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+env = FILER_BASEDIR=......./filer/Daten
+env = FILER_PUBLICDIR=public
+env = FILER_DOCUMENTSDIR=documents
+env = FILER_CLIENTSSDIR=customers
+env = ORGANIZATION=My Org
+env = GPG_RECIPIENT_FPRINT=xxxxxxxxxxxxxxxxxxx
+env = GPG_KEYSERVER=pool.sks-keyservers.net
+
+
+env = SECRET_KEY=CHANGEMECHANGEMECHANGEMECHANGEMECHANGEME
