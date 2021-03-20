@@ -10,6 +10,7 @@ from shutil import rmtree
 from threading import Thread
 from random import randint
 from sys import stderr, exit
+import tempfile
 
 from flask import (
     Flask,
@@ -405,13 +406,13 @@ def admin_download_user_token(user):
     
     qr.add_data(qr_data)
     img = qr.make_image()
-    
-    img_io = io.BytesIO()
-    img.save(img_io, 'PNG')
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/pmg',
-                     as_attachment=True,
-                     attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec))
+
+    with tempfile.TemporaryFile() as tmp:
+        img.save(tmp, "PNG")
+        return send_file(tmp,
+                         as_attachment=True,
+                         attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
+                         mimetype="image/png")
     
 
 #### SERVE FILES RULES ####
