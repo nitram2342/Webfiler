@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-09-03 21:02+0200\n"
+"POT-Creation-Date: 2021-03-20 18:26+0100\n"
 "PO-Revision-Date: 2020-09-03 17:48+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -16,75 +16,91 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.0\n"
 
-#: Filer.py:34
+#: Filer.py:96
 msgid ""
 "Ziehe die Dateien hier hin, um sie hochzuladen oder klicken Sie zur "
 "Auswahl."
 msgstr "To upload files, drag and drop files here or click to select files."
 
-#: templates/admin.html:14 templates/mandant.html:14
+#: templates/admin.html:51 templates/admin.html:55 templates/mandant.html:13
 msgid "Sind Sie sicher?"
 msgstr "Are you sure?"
 
-#: templates/admin.html:20
+#: templates/admin.html:61
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/admin.html:21
+#: templates/admin.html:62
 msgid "Mandanten"
 msgstr "Clients"
 
-#: templates/admin.html:26 templates/admin.html:52 templates/mandant.html:30
+#: templates/admin.html:67 templates/admin.html:99 templates/mandant.html:66
 msgid "Löschen"
 msgstr "Delete"
 
-#: templates/admin.html:28
+#: templates/admin.html:69
 msgid "Editieren"
 msgstr "Edit"
 
-#: templates/admin.html:29
+#: templates/admin.html:70
+msgid "Download 2FA QR"
+msgstr "Download 2FA QR"
+
+#: templates/admin.html:73
+msgid "2FA"
+msgstr "2FA"
+
+#: templates/admin.html:76
 msgid "Mandanten-URL"
 msgstr "Client URL"
 
-#: templates/admin.html:36
+#: templates/admin.html:83
 msgid "Generieren"
 msgstr "Generate"
 
-#: templates/admin.html:37
+#: templates/admin.html:84
 msgid "Kopieren"
 msgstr "Copy"
 
-#: templates/admin.html:38
-msgid "Hinzufügen"
-msgstr "Add"
+#: templates/admin.html:85
+#, fuzzy
+msgid "Speichern"
+msgstr "Delete"
 
-#: templates/admin.html:46
+#: templates/admin.html:93
 msgid "Öffentliche Dokumente"
 msgstr "Public Documents"
 
-#: templates/admin.html:62
+#: templates/admin.html:109
 msgid "Öffentliches Dokument hochladen"
 msgstr "Upload Public Documents"
 
-#: templates/mandant.html:20
+#: templates/mandant.html:19
+msgid "Please enter 2FA token:"
+msgstr "Please enter 2FA token:"
+
+#: templates/mandant.html:56
 msgid "Dokumenten-Austausch"
 msgstr "Document Exchange"
 
-#: templates/mandant.html:22
+#: templates/mandant.html:58
 msgid "Zurück zur Übersicht"
 msgstr "Back to main page"
 
-#: templates/mandant.html:24
+#: templates/mandant.html:60
 msgid "Dokumente"
 msgstr "Documents"
 
-#: templates/mandant.html:33
+#: templates/mandant.html:69
 msgid "Tage"
 msgstr "Days"
 
-#: templates/mandant.html:33
+#: templates/mandant.html:69
 msgid "Tag"
 msgstr "Day"
+
+#~ msgid "Hinzufügen"
+#~ msgstr "Add"
 

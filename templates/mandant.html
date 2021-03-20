@@ -12,7 +12,44 @@
       for (let f of document.getElementsByName("del-confirm")) {
 	  f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
       }
-  };  
+      
+      {% if enable_2fa %}
+      for (let f of document.getElementsByName("download-url")) {
+	  f.onclick = function() {
+	      token = prompt('{{_("Please enter 2FA token:")}}');
+	      if (token != null && token != "") {
+		  filename = f.download;
+		  post_to_download(f.href, {csrf_token: "{{ csrf_token() }}",
+					    token: token});
+		  
+	      }
+	      return false;
+	  };
+      }
+      {% endif %}
+  };
+
+  function post_to_download(path, params) {
+
+      const form = document.createElement('form');
+      form.method = "POST";
+      form.action = path;
+
+      for (const key in params) {
+	  if (params.hasOwnProperty(key)) {
+	      const hiddenField = document.createElement('input');
+	      hiddenField.type = 'hidden';
+	      hiddenField.name = key;
+	      hiddenField.value = params[key];
+
+	      form.appendChild(hiddenField);
+	  }
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+  }
+
 </script>
 </head>
 <body>
@@ -34,7 +71,7 @@
   {{item.download}}<br/>
   <ul>{{ loop(item.children) }}</ul>
   {%- else -%}
-  <a href="/{{admin}}{{item.name}}" download="{{item.download}}">{{ item.download }}</a>
+  <a href="/{{admin}}{{item.name}}" name="download-url" download="{{item.download}}">{{ item.download }}</a>
   {%- endif %}</li>
 {%- endfor %}
 </ul>

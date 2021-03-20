@@ -4,6 +4,7 @@ import hashlib
 import base64
 import time
 import gpgencryption
+import io
 from os import unlink, path, getenv, listdir, mkdir, chmod, umask, urandom
 from shutil import rmtree
 from threading import Thread
@@ -17,8 +18,10 @@ from flask import (
     request,
     redirect,
     send_from_directory,
+    send_file,
     g,
-    make_response
+    make_response,
+    abort
 )
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_dropzone import Dropzone
@@ -51,6 +54,12 @@ filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
 enable_chunking=False # enable for large files
 
+# Enable 2FA for download?
+enable_2fa = True
+if enable_2fa:
+    import pyotp
+    import qrcode
+    
 # Encrypt customer-uploaded data via GPG. It is enabled if there is a
 # fingerprint defined. The key is automatically downloaded from the
 # keyserver. If the key cannot be downloaded, your gpg 'dirmngr' is
@@ -97,7 +106,14 @@ def admin():
 
     update_dropzone_message()
     url_root = request.url_root.replace("http://", "https://", 1)
-    users = listdir(path.join(basedir, clientsdir))
+
+    users = []
+    for f in listdir(path.join(basedir, clientsdir)):
+        # filter a few technical file names
+        if not f.endswith(".token") and not f.endswith(".token.disabled"):
+            users.append({'name': f,
+                          '2fa' : user_token_enabled(f)})
+            
     return (
         render_template(
             "admin.html",
@@ -109,28 +125,33 @@ def admin():
             nonce=nonce,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
-            enable_chunking=enable_chunking
+            enable_chunking=enable_chunking,
+            enable_2fa=enable_2fa
         ),
         200,
         default_http_header,
     )
 
 
+
+
 @app.route("/admin/" + documentsdir + "/<user>", methods=["GET"])
 def admin_dokumente(user):
+    user_sec = secure_filename(user)
     update_dropzone_message()
     return (
         render_template(
             "mandant.html",
             admin="admin/",
-            user=secure_filename(user),
-            tree=make_tree(basedir, path.join(documentsdir, secure_filename(user))),
+            user=user_sec,
+            tree=make_tree(basedir, path.join(documentsdir, user_sec)),
             documentsdir=documentsdir,
             support_public_docs=support_public_docs,
             nonce=nonce,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
-            enable_chunking=enable_chunking
+            enable_chunking=enable_chunking,
+            enable_2fa=False and enable_2fa and user_token_enabled(user_sec) # not yet implemented
         ),
         200,
         default_http_header,
@@ -148,6 +169,12 @@ def admin_deluser(user):
     if method == "DELETE":
         rmtree(path.join(basedir, documentsdir, secure_filename(user)))
         unlink(path.join(basedir, clientsdir, secure_filename(user)))
+        if enable_2fa:
+            for suffix in [".token", ".token.disabled"]:
+                try:
+                    unlink(path.join(basedir, clientsdir, secure_filename(user) + suffix))
+                except FileNotFoundError:
+                    pass # These files may not exist.
     return redirect("/admin")
 
 
@@ -157,7 +184,7 @@ def admin_newuser():
     user = request.form.get("user", "")
     if not password or not user:
         return "Username or password missing", 400
-    directory = secure_filename(user)
+    user_sec = secure_filename(user)
 
     salt = urandom(4)
     sha = hashlib.sha1(password.encode("utf-8"))
@@ -167,12 +194,15 @@ def admin_newuser():
     tagged_digest_salt = "{{SSHA}}{}".format(digest_salt_b64.decode("ascii"))
 
     try:
-        make_dir(path.join(basedir, documentsdir, directory))
+        make_dir(path.join(basedir, documentsdir, user_sec))
         with open(
-            path.join(basedir, clientsdir, directory), "w+", encoding="utf-8"
+            path.join(basedir, clientsdir, user_sec), "w+", encoding="utf-8"
         ) as htpasswd:
             htpasswd.write("{}:{}\n".format(secure_filename(user), tagged_digest_salt))
 
+        if enable_2fa:
+            create_user_token(user_sec)
+            
     except OSError as error:
         return "Couldn't create user scope", 500
     return redirect("/admin")
@@ -183,19 +213,21 @@ def admin_newuser():
 ####
 @app.route("/" + documentsdir + "/<user>", methods=["GET"])
 def mandant(user):
+    user_sec = secure_filename(user)
     update_dropzone_message()
     return (
         render_template(
             "mandant.html",
             admin="",
-            user=secure_filename(user),
-            tree=make_tree(basedir, path.join(documentsdir, secure_filename(user))),
+            user=user_sec,
+            tree=make_tree(basedir, path.join(documentsdir, user_sec)),
             documentsdir=documentsdir,
             support_public_docs=support_public_docs,
             nonce=nonce,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
-            enable_chunking=enable_chunking
+            enable_chunking=enable_chunking,
+            enable_2fa=enable_2fa and user_token_enabled(user_sec)
         ),
         200,
         default_http_header,
@@ -267,7 +299,7 @@ def csrf_error(e):
 #### DELETE FILE ROUTES ####
 ####
 ####
-@app.route("/" + documentsdir + "/<user>/<path:filename>", methods=["POST"])
+
 def delete_file_mandant(user, filename):
     method = request.form.get("_method", "POST")
     if method == "DELETE":
@@ -279,7 +311,6 @@ def delete_file_mandant(user, filename):
     return redirect("/" + documentsdir + "/" + secure_filename(user))
 
 
-@app.route("/admin/" + documentsdir + "/<user>/<path:filename>", methods=["POST"])
 def delete_file_mandant_admin(user, filename):
     method = request.form.get("_method", "POST")
     if method == "DELETE":
@@ -298,20 +329,114 @@ def delete_file_admin(filename):
         unlink(path.join(basedir, publicdir, secure_filename(filename)))
     return redirect("/admin")
 
+#### TOKEN RELATED FUNCTIONS ####
+####
+####
+
+def has_token(user):
+    path_ = path.join(basedir, clientsdir, secure_filename(user) + ".token")
+    return path.exists(path_)
+
+def user_token_enabled(user):
+    path_ = path.join(basedir, clientsdir, secure_filename(user))
+    return enable_2fa and path.exists(path_ + ".token") and \
+        not path.exists(path_ + ".token.disabled")
+
+def read_user_token(user):
+
+    token_file = path.join(basedir, clientsdir, user + ".token")
+    with open(token_file, "r", encoding="utf-8") as token_file:
+        seed = token_file.readline().rstrip()
+        return pyotp.TOTP(seed)
+
+def create_user_token(user):
+    if enable_2fa:
+        token_file_path = path.join(basedir, clientsdir, secure_filename(user) + ".token")
+        with open(token_file_path, "w+", encoding="utf-8") as token_file:
+            token_file.write("{}\n".format(pyotp.random_base32()))
+    
+@app.route("/admin/token/toggle-state/<user>", methods=["POST"])
+def admin_toggle_user_token_active(user):
+    user_sec = secure_filename(user)
+    path_state = path.join(basedir, clientsdir, user + ".token.disabled")
+    if path.exists(path_state):
+        unlink(path_state)
+    else:
+        open(path_state, "w").close()
+        
+    return redirect("/admin")
+
+@app.route("/admin/token/<user>", methods=["GET"])
+def admin_download_user_token(user):
+    user_sec = secure_filename(user)
+
+    if not has_token(user_sec):
+        create_user_token(user_sec)
+        
+    token = read_user_token(user_sec)
+    if not token:
+        return abort(500)
+
+    issuer = "{} - {}".format(app.config["TITLE"], app.config["ORGANIZATION"])
+    qr_data = token.provisioning_uri(name=user_sec, issuer_name=issuer)
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    
+    qr.add_data(qr_data)
+    img = qr.make_image()
+    
+    img_io = io.BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/pmg',
+                     as_attachment=True,
+                     attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec))
+    
 
 #### SERVE FILES RULES ####
 ####
 ####
-@app.route("/admin/" + documentsdir + "/<user>/<path:filename>", methods=["GET"])
-@app.route("/" + documentsdir + "/<user>/<path:filename>", methods=["GET"])
-def custom_static(user, filename):
+
+
+def download_file_mandant(user, filename, user_2fa, token_user=None):
+    user_sec = secure_filename(user)
+    user_2fa_sec = secure_filename(user_2fa)    
+    if user_token_enabled(user_2fa_sec):
+        token = read_user_token(user_2fa_sec)
+        assert(token)
+        if token is None or token.now() != token_user:
+            return abort(403)
+    
     return send_from_directory(
-        path.join(basedir, documentsdir), path.join(user, filename)
+        path.join(basedir, documentsdir),
+        path.join(user_sec, secure_filename(filename)),
+        as_attachment = True
     )
 
 
+def access_resource(user, filename, user_2fa, token):
+    method = request.form.get("_method", "POST")
+    if method == "DELETE":
+        return delete_file_mandant(user, filename)
+    else:
+        return download_file_mandant(user, filename, user_2fa, token)
+    
+
+@app.route("/admin/" + documentsdir + "/<user>/<path:filename>", methods=["GET", "POST"])
+def access_resource_admin(user, filename):
+    return access_resource(user, filename, 'admin', request.form.get('token'))
+    
+@app.route("/" + documentsdir + "/<user>/<path:filename>", methods=["GET", "POST"])
+def access_resource_user(user, filename):
+    return access_resource(user, filename, user, request.form.get('token'))
+
+
 @app.route("/" + publicdir + "/<path:filename>")
-def custom_static_public(filename):
+def access_resource_public(filename):
     return send_from_directory(path.join(basedir, publicdir), filename)
 
 
@@ -407,4 +532,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    app.run(host=args.host, port=int(args.port))
+    app.run(host=args.host, port=int(args.port), debug=True)

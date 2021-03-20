@@ -17,6 +17,21 @@ button {
     min-width: 5.5em;
 }
 
+
+button.disabled {
+    box-shadow:inset 0px 1px 0px 0px #bee2f9;
+    background:linear-gradient(to bottom, #666666 5%, #333333 100%);
+    background-color:#333333;
+    border-radius:9px;
+    border:1px solid #3866a3;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    padding:5px 6px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #7cacde;
+}
+
 button.add,
 button.edit {
     box-shadow:inset 0px 1px 0px 0px #bee2f9;
@@ -45,6 +60,7 @@ button.delete {
     text-shadow:0px 1px 0px #854629;
 }
 button.add:hover,
+button.disabled:hover,
 button.edit:hover {
     background:linear-gradient(to bottom, #468ccf 5%, #63b8ee 100%);
     background-color:#468ccf;
@@ -55,6 +71,7 @@ button.delete:hover {
 }
 
 button.add:active,
+button.disabled:active,
 button.edit:active,
 button.delete:active {
     position:relative;
