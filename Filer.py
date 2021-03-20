@@ -339,9 +339,9 @@ def delete_file_admin(filename):
 
 def has_token(user):
     if user == 'admin':
-        path_ = path.join(basedir, clientsdir, secure_filename(user) + ".token")
-    else:
         path_ = path.join(basedir, "admin.token")
+    else:
+        path_ = path.join(basedir, clientsdir, secure_filename(user) + ".token")
     return path.exists(path_)
 
 def user_token_enabled(user):
