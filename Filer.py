@@ -151,7 +151,7 @@ def admin_dokumente(user):
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
             enable_chunking=enable_chunking,
-            enable_2fa=False and enable_2fa and user_token_enabled(user_sec) # not yet implemented
+            enable_2fa=enable_2fa and user_token_enabled("admin")
         ),
         200,
         default_http_header,
@@ -180,11 +180,14 @@ def admin_deluser(user):
 
 @app.route("/admin/new-user", methods=["POST"])
 def admin_newuser():
+    
     password = request.form.get("password", "")
-    user = request.form.get("user", "")
+    user = secure_filename(request.form.get("user", ""))
     if not password or not user:
         return "Username or password missing", 400
-    user_sec = secure_filename(user)
+    
+    if user == "admin":
+        return abort("403")
 
     salt = urandom(4)
     sha = hashlib.sha1(password.encode("utf-8"))
@@ -194,14 +197,14 @@ def admin_newuser():
     tagged_digest_salt = "{{SSHA}}{}".format(digest_salt_b64.decode("ascii"))
 
     try:
-        make_dir(path.join(basedir, documentsdir, user_sec))
+        make_dir(path.join(basedir, documentsdir, user))
         with open(
-            path.join(basedir, clientsdir, user_sec), "w+", encoding="utf-8"
+            path.join(basedir, clientsdir, user), "w+", encoding="utf-8"
         ) as htpasswd:
             htpasswd.write("{}:{}\n".format(secure_filename(user), tagged_digest_salt))
 
         if enable_2fa:
-            create_user_token(user_sec)
+            create_user_token(user)
             
     except OSError as error:
         return "Couldn't create user scope", 500
@@ -334,24 +337,38 @@ def delete_file_admin(filename):
 ####
 
 def has_token(user):
-    path_ = path.join(basedir, clientsdir, secure_filename(user) + ".token")
+    if user == 'admin':
+        path_ = path.join(basedir, clientsdir, secure_filename(user) + ".token")
+    else:
+        path_ = path.join(basedir, "admin.token")
     return path.exists(path_)
 
 def user_token_enabled(user):
-    path_ = path.join(basedir, clientsdir, secure_filename(user))
+    if user == 'admin':
+        path_ = path.join(basedir, "admin")
+    else:
+        path_ = path.join(basedir, clientsdir, secure_filename(user))
+        
     return enable_2fa and path.exists(path_ + ".token") and \
         not path.exists(path_ + ".token.disabled")
 
 def read_user_token(user):
-
-    token_file = path.join(basedir, clientsdir, user + ".token")
+    if user == 'admin':        
+        token_file = path.join(basedir, "admin.token")
+    else:
+        token_file = path.join(basedir, clientsdir, user + ".token")
+        
     with open(token_file, "r", encoding="utf-8") as token_file:
         seed = token_file.readline().rstrip()
         return pyotp.TOTP(seed)
 
 def create_user_token(user):
     if enable_2fa:
-        token_file_path = path.join(basedir, clientsdir, secure_filename(user) + ".token")
+        if user == 'admin':
+            token_file_path = path.join(basedir, "admin.token")
+        else:
+            token_file_path = path.join(basedir, clientsdir, secure_filename(user) + ".token")
+            
         with open(token_file_path, "w+", encoding="utf-8") as token_file:
             token_file.write("{}\n".format(pyotp.random_base32()))
     

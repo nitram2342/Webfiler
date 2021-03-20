@@ -17,6 +17,14 @@ Web server integration
 
 Webfiler generates htpasswd files to protect your spaces. Webfiler has a [sample nginx config](nginx.conf.sample) you can use. Porting it to Apache will not work without changing the code.
 
+
+Using Google Authenticator
+===========================
+
+File downloads can be restriced to a second factor token provided by the Google Authenticator. When you create a new user, a token seed is generated. Download the seed as QR code, hand it over to your clients/patients/customers. It requires a bit of background knowledge to use a second factor. Depending on the people using the File, you may disable it for certain users.
+
+In order to create a seed for the admin user, just create a temporary user such as "myfiler-admin", download the user's QR code, and move the "myfiler-admin.token" file to the "admin.token" file using shell access on the web server. Delete the "myfiler-admin" user afterwards. The user name will later appear in the authenticator mobile app. Therefore, a meaningful username is recommended.
+
 License
 =======
 
