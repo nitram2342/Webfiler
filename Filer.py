@@ -376,7 +376,7 @@ def create_user_token(user):
 @app.route("/admin/token/toggle-state/<user>", methods=["POST"])
 def admin_toggle_user_token_active(user):
     user_sec = secure_filename(user)
-    path_state = path.join(basedir, clientsdir, user + ".token.disabled")
+    path_state = path.join(basedir, clientsdir, user_sec + ".token.disabled")
     if path.exists(path_state):
         unlink(path_state)
     else:
@@ -395,24 +395,22 @@ def admin_download_user_token(user):
     if not token:
         return abort(500)
 
-    issuer = "{} - {}".format(app.config["TITLE"], app.config["ORGANIZATION"])
-    qr_data = token.provisioning_uri(name=user_sec, issuer_name=issuer)
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=10,
-        border=4,
-    )
-    
-    qr.add_data(qr_data)
-    img = qr.make_image()
+        border=4)
 
-    with tempfile.TemporaryFile() as tmp:
-        img.save(tmp, "PNG")
-        return send_file(tmp,
-                         as_attachment=True,
-                         attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
-                         mimetype="image/png")
+    issuer = "{} - {}".format(app.config["TITLE"], app.config["ORGANIZATION"])
+    qr.add_data(token.provisioning_uri(name=user_sec, issuer_name=issuer))
+    img = qr.make_image()
+    png_path = path.join(basedir, clientsdir, user_sec + ".png")
+    img.save(png_path)
+
+    return send_file(png_path,
+                     as_attachment=True,
+                     attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
+                     mimetype="image/png")
     
 
 #### SERVE FILES RULES ####
