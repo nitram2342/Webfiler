@@ -111,7 +111,7 @@ def admin():
     users = []
     for f in listdir(path.join(basedir, clientsdir)):
         # filter a few technical file names
-        if not f.endswith(".token") and not f.endswith(".token.disabled"):
+        if not f.endswith(".token") and not f.endswith(".token.disabled") and not f.endswith(".png"):
             users.append({'name': f,
                           '2fa' : user_token_enabled(f)})
             
