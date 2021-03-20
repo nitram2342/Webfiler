@@ -15,7 +15,7 @@ Currently, Webfiler comes with a Makefile which sets everything up for you. Afte
 Web server integration
 ======================
 
-Webfiler generates htpasswd files to protect your spaces. Webfiler has a [sample nginx config](nginx.conf.sample) you can use. Porting it to Apache will not work without changing the code.
+Webfiler generates htpasswd files to protect your spaces. Webfiler has a [sample nginx config](nginx.conf.sample) you can use. Porting it to Apache will not work without changing the code. A [sample uwsgi configuration file](webfiler.ini.sample) is also in the repository.
 
 
 Using Google Authenticator
