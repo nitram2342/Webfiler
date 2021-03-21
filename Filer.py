@@ -346,10 +346,13 @@ def notify_upload_via_mail(user, filename):
 
     server = smtplib.SMTP_SSL(app.config["SMTPS_HOST"], app.config["SMTPS_PORT"], context=context)
     server.login(app.config["SMTPS_USER"], app.config["SMTPS_PASS"])
+
+    url = request.url_root + "/" + documentsdir + "/" + user_sec + "/" + fname_sec
     
     msg = MIMEText(f"Dear {app.config['TITLE']} user,\n\n" + \
                    f"User {user_sec} uploaded file \"{fname_sec}\". Please download it to your computer, because the\n" + \
-                   f"file will be deleted on the server within {filettl} days.\n")
+                   f"file will be deleted on the server within {filettl} days.\n\n" + \
+                   f"The file is accessible via {url}.\n\n")
     
     msg['Subject'] = f"{app.config['ORGANIZATION']} - {app.config['TITLE']}: User {user_sec} sent a file"
     msg['From'] = app.config["SMTPS_USER"]
