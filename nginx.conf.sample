@@ -1,7 +1,16 @@
    server {
         listen [::]:80;
-        listen [::]:443 ssl http2;
         listen 80;
+        server_name dokumente.foo.com;
+	
+        location /.well-known/acme-challenge/ {
+          alias /usr/local/www/dehydrated/;
+        }
+
+	return 301 https://dokumente.foo.com$request_uri;
+   }
+   server {
+        listen [::]:443 ssl http2;
         listen 443 ssl http2;
         server_name dokumente.foo.com;
 
@@ -42,8 +51,5 @@
                 proxy_set_header X-Forwarded-For $remote_addr;
         }
 
-        location /.well-known/acme-challenge/ {
-          alias /usr/local/www/dehydrated/;
-        }
     }
 
