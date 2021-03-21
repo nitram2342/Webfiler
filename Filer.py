@@ -52,6 +52,7 @@ app.config["ORGANIZATION"] = getenv("ORGANIZATION", "Kanzlei Hubrig")
 app.config["TITLE"] = "Filer"
 app.config["LANGUAGES"] = ["en", "de"]
 
+
 app.config["SMTPS_HOST"] = getenv("SMTPS_HOST")
 app.config["SMTPS_PORT"] = int(getenv("SMTPS_PORT", "465"))
 app.config["SMTPS_USER"] = getenv("SMTPS_USER")
@@ -62,10 +63,11 @@ enable_mail_notification = True
 
 filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
+app.config["MAX_SIZE"] = "5 GB" # only an information
 enable_chunking=False # enable for large files
 
 # Enable 2FA for download?
-enable_2fa = False
+enable_2fa = True
 if enable_2fa:
     import pyotp
     import qrcode
@@ -167,6 +169,27 @@ def admin_dokumente(user):
         default_http_header,
     )
 
+
+@app.route("/admin/howto", methods=["GET", "POST"])
+def admin_user_howto():
+    user_sec = secure_filename(request.form.get("user",""))
+    password = request.form.get("password")
+    
+    return (
+        render_template(
+            "howto.html",
+            user=user_sec,
+            password=password,
+            url=request.url_root + "/" + documentsdir + "/" + user_sec,
+            max_size=app.config["MAX_SIZE"],
+            filettl=filettl,
+            organization=app.config["ORGANIZATION"],
+            title=app.config["TITLE"],
+            enable_2fa=enable_2fa and user_token_enabled(user_sec)
+        ),
+        200,
+        default_http_header,
+    )
 
 #
 # API
@@ -426,6 +449,8 @@ def admin_toggle_user_token_active(user):
 
 @app.route("/admin/token/<user>", methods=["GET"])
 def admin_download_user_token(user):
+    as_attachment = False if request.args.get("inline") == 'true' else True
+
     user_sec = secure_filename(user)
 
     if not has_token(user_sec):
@@ -448,7 +473,7 @@ def admin_download_user_token(user):
     img.save(png_path)
 
     return send_file(png_path,
-                     as_attachment=True,
+                     as_attachment=as_attachment,
                      attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
                      mimetype="image/png",
                      cache_timeout=0)

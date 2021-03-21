@@ -115,3 +115,39 @@ form {
 .droppy form {
     display: block;
 }
+
+.qr-code {
+    text-align: center;
+}
+
+
+.cellaligned {
+    display: table-row;
+}
+.cellaligned div {
+    display: table-cell;
+    padding-left: 1em;
+    padding-bottom: .25em;    
+}
+
+@media print {
+
+    @page {
+	margin: 3cm;
+    }
+    
+   
+    body {
+	font-size: 175%;
+	line-height: 1.5;
+
+    }
+
+    .qr-code {
+	text-align: center;
+	
+    }
+
+
+
+}

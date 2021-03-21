@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-20 18:26+0100\n"
+"POT-Creation-Date: 2021-03-21 18:28+0100\n"
 "PO-Revision-Date: 2020-09-03 17:48+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.0\n"
 
-#: Filer.py:96
+#: Filer.py:108
 msgid ""
 "Ziehe die Dateien hier hin, um sie hochzuladen oder klicken Sie zur "
 "Auswahl."
@@ -26,70 +26,74 @@ msgstr ""
 "Ziehe die Dateien hier hin, um sie hochzuladen oder klicken Sie zur "
 "Auswahl."
 
-#: templates/admin.html:51 templates/admin.html:55 templates/mandant.html:13
+#: templates/admin.html:94 templates/admin.html:118 templates/mandant.html:13
 msgid "Sind Sie sicher?"
 msgstr "Sind Sie sicher?"
 
-#: templates/admin.html:61
+#: templates/admin.html:127
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/admin.html:62
+#: templates/admin.html:128
 msgid "Mandanten"
 msgstr "Mandanten"
 
-#: templates/admin.html:67 templates/admin.html:99 templates/mandant.html:66
+#: templates/admin.html:133 templates/admin.html:169 templates/mandant.html:66
 msgid "Löschen"
 msgstr "Löschen"
 
-#: templates/admin.html:69
+#: templates/admin.html:135
 msgid "Editieren"
 msgstr "Editieren"
 
-#: templates/admin.html:70
+#: templates/admin.html:138
 msgid "Download 2FA QR"
 msgstr "2FA-QR Herunterladen"
 
-#: templates/admin.html:73
+#: templates/admin.html:141
 msgid "2FA"
 msgstr "2FA"
 
-#: templates/admin.html:76
+#: templates/admin.html:145
 msgid "Mandanten-URL"
 msgstr "Mandanten-URL"
 
-#: templates/admin.html:83
+#: templates/admin.html:152
 msgid "Generieren"
 msgstr "Generieren"
 
-#: templates/admin.html:84
+#: templates/admin.html:153
 msgid "Kopieren"
 msgstr "Kopieren"
 
-#: templates/admin.html:85
+#: templates/admin.html:154
+msgid "How-to"
+msgstr "Anleitung"
+
+#: templates/admin.html:155
 #, fuzzy
 msgid "Speichern"
 msgstr "Löschen"
 
-#: templates/admin.html:93
+#: templates/admin.html:163
 msgid "Öffentliche Dokumente"
 msgstr "Öffentliche Dokumente"
 
-#: templates/admin.html:109
+#: templates/admin.html:179
 msgid "Öffentliches Dokument hochladen"
 msgstr "Öffentliches Dokument hochladen"
+
+#: templates/howto.html:9 templates/mandant.html:56
+msgid "Dokumenten-Austausch"
+msgstr "Dokumenten-Austausch"
+
+#: templates/howto.html:11 templates/mandant.html:58
+msgid "Zurück zur Übersicht"
+msgstr "Zurück zur Übersicht"
 
 #: templates/mandant.html:19
 msgid "Please enter 2FA token:"
 msgstr "Bitte geben Sie Ihren 2FA-Token ein:"
-
-#: templates/mandant.html:56
-msgid "Dokumenten-Austausch"
-msgstr "Dokumenten-Austausch"
-
-#: templates/mandant.html:58
-msgid "Zurück zur Übersicht"
-msgstr "Zurück zur Übersicht"
 
 #: templates/mandant.html:60
 msgid "Dokumente"

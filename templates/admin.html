@@ -12,7 +12,7 @@ function generatePassword() {
   {# Alphabet that avoids: 0O 1I and certain special characters that
      people may fail to read when for example passing a password via phone. #}
   var chars = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ!#$%&()*+,-.:;<=>?@";
-  var randarray = new Uint16Array(32);
+  var randarray = new Uint16Array(12);
   var retval = "";
   window.crypto.getRandomValues(randarray);
   for (var i = 0, n = chars.length; i < randarray.length; ++i)
@@ -28,20 +28,82 @@ function copyPassword() {
 	navigator.clipboard.writeText('password removed from clipboard after timeout')
     }, 30000);
 }
+
+function post(path, params) {
+
+    const form = document.createElement('form');
+    form.method = "POST";
+    form.action = path;
+
+    for (const key in params) {
+	if (params.hasOwnProperty(key)) {
+	    const hiddenField = document.createElement('input');
+	    hiddenField.type = 'hidden';
+	    hiddenField.name = key;
+	    hiddenField.value = params[key];
+	    
+	    form.appendChild(hiddenField);
+	}
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function check_howto_data_and_enable_button() {
+    user = document.getElementById("user").value;
+    password = document.getElementById("password").value;
+    
+    b = document.getElementById("howto");
+    if (b != null) {
+	state = (user != "") && (password != "");
+	b.disabled = !state;
+	if (state) {
+	    b.className = "edit";
+	}
+	else {
+	    b.className = "disabled";
+	}
+    }
+}
   
 window.onload = function() {
     b = document.getElementById("generatePassword");
-    if (b != null) { b.onclick = function() { generatePassword() }; }
+    if (b != null) { b.onclick = function() { generatePassword(); check_howto_data_and_enable_button(); }; }
 		     
     b = document.getElementById("copyPassword");
     if (b != null) { b.onclick = function() { copyPassword() }; }
 
+    b = document.getElementById("user");
+    if (b != null) {
+	b.oninput = function() { check_howto_data_and_enable_button() };
+    }
+    
+    b = document.getElementById("password");
+    if (b != null) {
+	b.oninput = function() { check_howto_data_and_enable_button() };
+    }
+
+    check_howto_data_and_enable_button();
+    
     for (let b of document.getElementsByName("edit")) {
 	b.onclick = function() { document.getElementById('user').value = b.value };
     }
 
     for (let f of document.getElementsByName("del-confirm")) {
 	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
+    }
+    
+    b = document.getElementById("howto");
+    if (b != null) {
+	b.onclick = function() {
+	    user = document.getElementById("user").value;
+	    password = document.getElementById("password").value;
+	    post('/admin/howto', {csrf_token: "{{ csrf_token() }}",
+				  user: user,
+				  password: password});
+	    return false;
+	};
     }
     
     {% if enable_2fa %}
@@ -56,6 +118,8 @@ window.onload = function() {
 	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
     }
     {% endif %}
+
+    
 };  
 </script>
 </head>
@@ -87,6 +151,7 @@ window.onload = function() {
     <input id="password" name="password" type="text" placeholder="Passwort" autocomplete="off" required></input>
     <button class="add" id="generatePassword" type="button">{{_("Generieren")}}</button>
     <button class="add" id="copyPassword" type="button">{{_("Kopieren")}}</button>
+    <button class="edit" id="howto" type="button">{{_("How-to")}}</button>
     <button class="add">{{_("Speichern")}}</button>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
   </form>
