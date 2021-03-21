@@ -325,10 +325,10 @@ def notify_upload_via_mail(user, filename):
     server.login(app.config["SMTPS_USER"], app.config["SMTPS_PASS"])
     
     msg = MIMEText(f"Dear {app.config['TITLE']} user,\n\n" + \
-                   f"User {user_sec} uploaded file {fname_sec} just now. Please download it to you computer, because the\n" + \
-                   "file will be deleted on the erver within {filettl} days.\n")
+                   f"User {user_sec} uploaded file \"{fname_sec}\" just now. Please download it to your computer, because the\n" + \
+                   f"file will be deleted on the erver within {filettl} days.\n")
     
-    msg['Subject'] = f"{app.config['TITLE']} - {app.config['ORGANIZATION']}: User {user_sec} sent a file"
+    msg['Subject'] = f"{app.config['ORGANIZATION']} - {app.config['TITLE']}: User {user_sec} sent a file"
     msg['From'] = app.config["SMTPS_USER"]
     msg['To'] = app.config["SMTPS_RECIPIENT"]
     
