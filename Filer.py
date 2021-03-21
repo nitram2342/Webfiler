@@ -53,7 +53,7 @@ app.config["TITLE"] = "Filer"
 app.config["LANGUAGES"] = ["en", "de"]
 
 app.config["SMTPS_HOST"] = getenv("SMTPS_HOST")
-app.config["SMTPS_PORT"] = int(getenv("SMTPS_HOST", "465"))
+app.config["SMTPS_PORT"] = int(getenv("SMTPS_PORT", "465"))
 app.config["SMTPS_USER"] = getenv("SMTPS_USER")
 app.config["SMTPS_PASS"] = getenv("SMTPS_PASS")
 app.config["SMTPS_RECIPIENT"] = getenv("SMTPS_RECIPIENT")
@@ -312,25 +312,23 @@ def store_file(pathname, fstream, encrypt, current_chunk, offset, total_chunks):
 def notify_upload_via_mail(user, filename):
 
     user_sec = secure_filename(user)
+    fname_sec = secure_filename(filename)
     
-    self.context = ssl.create_default_context()
+    context = ssl.create_default_context()
     # There is an option to disable certain TLS mechanisms, therefore we do it.
-    self.context.options |= ssl.OP_NO_SSLv2
-    self.context.options |= ssl.OP_NO_SSLv3
-    self.context.options |= ssl.OP_NO_TLSv1
-    self.context.options |= ssl.OP_NO_TLSv1_1
+    context.options |= ssl.OP_NO_SSLv2
+    context.options |= ssl.OP_NO_SSLv3
+    context.options |= ssl.OP_NO_TLSv1
+    context.options |= ssl.OP_NO_TLSv1_1
 
-    server = smtplib.SMTP_SSL(app.config["SMTPS_HOST"], app.config["SMTPS_PORT"], context=self.context)
+    server = smtplib.SMTP_SSL(app.config["SMTPS_HOST"], app.config["SMTPS_PORT"], context=context)
     server.login(app.config["SMTPS_USER"], app.config["SMTPS_PASS"])
     
-    msg = MIMEText("Dear {} user,\n\n" + \
-                   "User {} uploaded file {} just now. Please download it to you computer, because the\n" + \
-                   "file will be deleted on the erver within {} days.\n".format(app.config["TITLE"],
-                                                                                user_sec,
-                                                                                filename,
-                                                                                filettl))
+    msg = MIMEText(f"Dear {app.config['TITLE']} user,\n\n" + \
+                   f"User {user_sec} uploaded file {fname_sec} just now. Please download it to you computer, because the\n" + \
+                   "file will be deleted on the erver within {filettl} days.\n")
     
-    msg['Subject'] = "{} - {}: User {} sent a file".format(app.config["TITLE"], app.config["ORGANIZATION"], user_sec)
+    msg['Subject'] = f"{app.config["TITLE"]} - {app.config["ORGANIZATION"]}: User {user_sec} sent a file"
     msg['From'] = app.config["SMTPS_USER"]
     msg['To'] = app.config["SMTPS_RECIPIENT"]
     
