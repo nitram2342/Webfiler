@@ -441,7 +441,7 @@ def admin_download_user_token(user):
         box_size=10,
         border=4)
 
-    issuer = "{} - {}".format(app.config["TITLE"], app.config["ORGANIZATION"])
+    issuer = "{} - {}".format(app.config["ORGANIZATION"], app.config["TITLE"])
     qr.add_data(token.provisioning_uri(name=user_sec, issuer_name=issuer))
     img = qr.make_image()
     png_path = path.join(basedir, clientsdir, user_sec + ".png")
