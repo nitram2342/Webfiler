@@ -130,24 +130,27 @@ form {
     padding-bottom: .25em;    
 }
 
+.footer {
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
 @media print {
 
     @page {
 	margin: 3cm;
+	size: A4;
     }
     
    
     body {
 	font-size: 175%;
 	line-height: 1.5;
-
     }
 
     .qr-code {
 	text-align: center;
-	
     }
-
-
-
 }
+

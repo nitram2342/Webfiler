@@ -305,15 +305,15 @@ def _upload_mandant(user=None, encrypt=False):
             else:
                 pathname = path.join(basedir, publicdir, filename)
             
-            store_file(pathname, f.stream, encrypt,
-                       int(request.form['dzchunkindex']) if enable_chunking else 0,
-                       int(request.form['dzchunkbyteoffset']) if enable_chunking else 0,
-                       int(request.form['dztotalchunkcount']) if enable_chunking else 0)
+            final_filename = store_file(pathname, f.stream, encrypt,
+                                        int(request.form['dzchunkindex']) if enable_chunking else 0,
+                                        int(request.form['dzchunkbyteoffset']) if enable_chunking else 0,
+                                        int(request.form['dztotalchunkcount']) if enable_chunking else 0)
 
             if enable_mail_notification:
-                notify_upload_via_mail(user_sec, filename)
-            
-    return "upload complete"
+                notify_upload_via_mail(user_sec, final_filename)
+
+    return make_response(("Data uploaded successfully", 200))
 
 def store_file(pathname, fstream, encrypt, current_chunk, offset, total_chunks):
 
@@ -329,8 +329,9 @@ def store_file(pathname, fstream, encrypt, current_chunk, offset, total_chunks):
         with open(pathname, 'ab') as fh_out:
             fh_out.seek(offset)
             fh_out.write(fstream.read())
+            
+    return pathname
 
-    return make_response(("Data uploaded successfully", 200))
 
 
 def notify_upload_via_mail(user, filename):

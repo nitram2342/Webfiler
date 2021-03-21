@@ -12,6 +12,7 @@
     
     <h2>Nutzung der Datei-Austauschplattform</h2>
     <p>Für den Austausch datenschutz- und sicherheitssensibler Daten steht eine webbasierte Austauschplattform zur Verfügung. Sie und wir können Dateien hochladen. Das Limit für Dateien sind {{max_size}} pro Datei. Dateien werden automatisch nach {{filettl}} Tagen oder durch uns manuell gelöscht.</p>
+    
     <div class='cellaligned'>
       <div>URL:</div>
       <div><a href="{{url}}">{{url}}</a></div>
@@ -36,7 +37,7 @@
     <p>
       For the exchange of privacy- and security-sensitive files, there is a web-based platform. You and we can upload files. The size limit is {{max_size}} per file. The files are automatically deleted after {{filettl}} days or can be manually deleted by us. Please use the following data to login:
     </p>
-
+    
     <div class='cellaligned'>
       <div>URL:</div>
       <div><a href="{{url}}">{{url}}</a></div>
@@ -55,13 +56,13 @@
       Two-factor authentication (2FA) is enabled for your account. The exchange platform asks for the second factor when downloading files. To use the second factor, the "Google Authenticator" application must be installed on a mobile phone. This application can be found in the Android Play Store or Apple's App Store. Please install the Google Authenticator application and scan the QR code on the page below using the app. The Google Authenticator then generates a six-digit number every minute, which must be entered as the second factor in the exchange platform when downloading files.
     </p>
     {% endif %}
-
     
     {% if enable_2fa %}
     <div class="qr-code">
       <img src="/admin/token/{{user}}?inline=true"/>
     </div>
     {% endif %}
-    
+
+    <div class="footer">Vertraulich - Confidential</div>
   </body>
 </html>
