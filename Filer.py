@@ -328,7 +328,7 @@ def notify_upload_via_mail(user, filename):
                    f"User {user_sec} uploaded file {fname_sec} just now. Please download it to you computer, because the\n" + \
                    "file will be deleted on the erver within {filettl} days.\n")
     
-    msg['Subject'] = f"{app.config["TITLE"]} - {app.config["ORGANIZATION"]}: User {user_sec} sent a file"
+    msg['Subject'] = f"{app.config['TITLE']} - {app.config['ORGANIZATION']}: User {user_sec} sent a file"
     msg['From'] = app.config["SMTPS_USER"]
     msg['To'] = app.config["SMTPS_RECIPIENT"]
     
