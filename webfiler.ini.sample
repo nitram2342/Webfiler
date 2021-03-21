@@ -23,5 +23,9 @@ env = ORGANIZATION=My Org
 env = GPG_RECIPIENT_FPRINT=xxxxxxxxxxxxxxxxxxx
 env = GPG_KEYSERVER=pool.sks-keyservers.net
 
+env = SMTPS_HOST=my-smtps-host
+env = SMTPS_USER=a-user-account
+env = SMTPS_PASS=a-password
+env = SMTPS_RECIPIENT=my-mail-address
 
 env = SECRET_KEY=CHANGEMECHANGEMECHANGEMECHANGEMECHANGEME

@@ -10,7 +10,8 @@ from shutil import rmtree
 from threading import Thread
 from random import randint
 from sys import stderr, exit
-import tempfile
+import smtplib, ssl
+from email.mime.text import MIMEText
 
 from flask import (
     Flask,
@@ -50,6 +51,14 @@ app.config["SESSION_COOKIE_SAMESITE"] = 'Strict'
 app.config["ORGANIZATION"] = getenv("ORGANIZATION", "Kanzlei Hubrig")
 app.config["TITLE"] = "Filer"
 app.config["LANGUAGES"] = ["en", "de"]
+
+app.config["SMTPS_HOST"] = getenv("SMTPS_HOST")
+app.config["SMTPS_PORT"] = int(getenv("SMTPS_HOST", "465"))
+app.config["SMTPS_USER"] = getenv("SMTPS_USER")
+app.config["SMTPS_PASS"] = getenv("SMTPS_PASS")
+app.config["SMTPS_RECIPIENT"] = getenv("SMTPS_RECIPIENT")
+enable_mail_notification = True
+
 
 filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
@@ -262,11 +271,13 @@ def upload_admin():
 
 
 def _upload_mandant(user=None, encrypt=False):
+    user_sec = secure_filename(user)
+    
     for key, f in request.files.items():
         if key.startswith("file"):
             filename = secure_filename(f.filename)
             if user:
-                pathname = path.join(basedir, documentsdir, secure_filename(user), filename)
+                pathname = path.join(basedir, documentsdir, user_sec, filename)
             else:
                 pathname = path.join(basedir, publicdir, filename)
             
@@ -274,6 +285,9 @@ def _upload_mandant(user=None, encrypt=False):
                        int(request.form['dzchunkindex']) if enable_chunking else 0,
                        int(request.form['dzchunkbyteoffset']) if enable_chunking else 0,
                        int(request.form['dztotalchunkcount']) if enable_chunking else 0)
+
+            if enable_mail_notification:
+                notify_upload_via_mail(user_sec, filename)
             
     return "upload complete"
 
@@ -294,11 +308,39 @@ def store_file(pathname, fstream, encrypt, current_chunk, offset, total_chunks):
 
     return make_response(("Data uploaded successfully", 200))
 
+
+def notify_upload_via_mail(user, filename):
+
+    user_sec = secure_filename(user)
+    
+    self.context = ssl.create_default_context()
+    # There is an option to disable certain TLS mechanisms, therefore we do it.
+    self.context.options |= ssl.OP_NO_SSLv2
+    self.context.options |= ssl.OP_NO_SSLv3
+    self.context.options |= ssl.OP_NO_TLSv1
+    self.context.options |= ssl.OP_NO_TLSv1_1
+
+    server = smtplib.SMTP_SSL(app.config["SMTPS_HOST"], app.config["SMTPS_PORT"], context=self.context)
+    server.login(app.config["SMTPS_USER"], app.config["SMTPS_PASS"])
+    
+    msg = MIMEText("Dear {} user,\n\n" + \
+                   "User {} uploaded file {} just now. Please download it to you computer, because the\n" + \
+                   "file will be deleted on the erver within {} days.\n".format(app.config["TITLE"],
+                                                                                user_sec,
+                                                                                filename,
+                                                                                filettl))
+    
+    msg['Subject'] = "{} - {}: User {} sent a file".format(app.config["TITLE"], app.config["ORGANIZATION"], user_sec)
+    msg['From'] = app.config["SMTPS_USER"]
+    msg['To'] = app.config["SMTPS_RECIPIENT"]
+    
+    server.sendmail(app.config["SMTPS_USER"], app.config["SMTPS_RECIPIENT"], msg.as_string())
+
+
 # handle CSRF error
 @app.errorhandler(CSRFError)
 def csrf_error(e):
     return e.description, 400
-
 
 #### DELETE FILE ROUTES ####
 ####
@@ -357,7 +399,7 @@ def read_user_token(user):
     if user == 'admin':        
         token_file = path.join(basedir, "admin.token")
     else:
-        token_file = path.join(basedir, clientsdir, user + ".token")
+        token_file = path.join(basedir, clientsdir, secure_filename(user) + ".token")
         
     with open(token_file, "r", encoding="utf-8") as token_file:
         seed = token_file.readline().rstrip()
