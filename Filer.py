@@ -450,7 +450,8 @@ def admin_download_user_token(user):
     return send_file(png_path,
                      as_attachment=True,
                      attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
-                     mimetype="image/png")
+                     mimetype="image/png",
+                     cache_timeout=0)
     
 
 #### SERVE FILES RULES ####
@@ -470,7 +471,8 @@ def download_file_mandant(user, filename, user_2fa, token_user=None):
     return send_from_directory(
         path.join(basedir, documentsdir),
         path.join(user_sec, secure_filename(filename)),
-        as_attachment = True
+        as_attachment = True,
+        cache_timeout=0
     )
 
 
