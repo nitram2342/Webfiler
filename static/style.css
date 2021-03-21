@@ -126,7 +126,7 @@ form {
 }
 .cellaligned div {
     display: table-cell;
-    padding-left: 1em;
+    padding-right: 1em;
     padding-bottom: .25em;    
 }
 
