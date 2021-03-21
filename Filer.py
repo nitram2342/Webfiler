@@ -180,7 +180,7 @@ def admin_deluser(user):
         rmtree(path.join(basedir, documentsdir, secure_filename(user)))
         unlink(path.join(basedir, clientsdir, secure_filename(user)))
         if enable_2fa:
-            for suffix in [".token", ".token.disabled"]:
+            for suffix in [".token", ".token.disabled", ".png"]:
                 try:
                     unlink(path.join(basedir, clientsdir, secure_filename(user) + suffix))
                 except FileNotFoundError:
