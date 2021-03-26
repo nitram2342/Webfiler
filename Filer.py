@@ -181,7 +181,7 @@ def admin_user_howto():
             "howto.html",
             user=user_sec,
             password=password,
-            url=request.url_root + "/" + documentsdir + "/" + user_sec,
+            url=request.url_root + documentsdir + "/" + user_sec,
             max_size=app.config["MAX_SIZE"],
             filettl=filettl,
             organization=app.config["ORGANIZATION"],
