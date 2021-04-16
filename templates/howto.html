@@ -11,7 +11,7 @@
     <!-- <a href="/admin">{{_("Zurück zur Übersicht")}}</a> -->
     
     <h2>Nutzung der Datei-Austauschplattform</h2>
-    <p>Für den Austausch datenschutz- und sicherheitssensibler Daten steht eine webbasierte Austauschplattform zur Verfügung. Sie und wir können Dateien hochladen. Das Limit für Dateien sind {{max_size}} pro Datei. Dateien werden automatisch nach {{filettl}} Tagen oder durch uns manuell gelöscht.</p>
+    <p>Für den Austausch datenschutz- und sicherheitssensibler Daten steht eine webbasierte Austauschplattform zur Verfügung. Sie und wir können Dateien hochladen. Das Limit für Dateien beträgt {{max_size}} pro Datei. Dateien werden automatisch nach {{filettl}} Tagen oder durch uns manuell gelöscht.</p>
     
     <div class='cellaligned'>
       <div>URL:</div>
@@ -28,7 +28,7 @@
     
     {% if enable_2fa %}
     <p>
-      Für den Zugang ist eine Zwei-Faktor-Authentisierung (2FA) aktiviert. Die Austauschplattform fragt nach dem zweiten Faktor beim Herunterladen von Dateien. Um den zweiten Faktor nutzen zu können, muss auf einem Mobiltelefon die Anwendung "Google Authenticator" oder "Duo Mobile" von Cisco installiert werden. Diese sind im Android Play Store oder in Apples App Store zu finden. Bitte installieren Sie eine der Anwendungen und scannen den QR-Code unter auf der Seite mit der Authentisierungs-Anwendung ein. Die Authentisierungsanwendung genereriert dann im Minutentakt eine sechstellige Zahl die als zweiter Faktor in die Austauschplattform beim Herunterladen von Dateien eingetragen werden muss.
+      Für den Zugang ist eine Zwei-Faktor-Authentisierung (2FA) aktiviert. Die Austauschplattform fragt nach dem zweiten Faktor beim Herunterladen von Dateien. Um den zweiten Faktor nutzen zu können, muss auf einem Mobiltelefon die Anwendung "Google Authenticator" von Google oder "Duo Mobile" von Cisco installiert werden. Diese sind im Android Play Store oder in Apples App Store zu finden. Bitte installieren Sie eine der Anwendungen und scannen den QR-Code unter auf der Seite mit der Authentisierungs-Anwendung ein. Die Authentisierungsanwendung genereriert dann im Minutentakt eine sechstellige Zahl, die als zweiter Faktor von der Austauschplattform beim Herunterladen von Dateien abgefragt wird.
     </p>
     {% endif %}
     
@@ -53,7 +53,7 @@
 
     {% if enable_2fa %}
     <p>
-      Two-factor authentication (2FA) is enabled for your account. The exchange platform asks for the second factor when downloading files. To use the second factor, the "Google Authenticator" application or the "Duo Mobile" app by CISCO must be installed on a mobile phone. These applications can be found in the Android Play Store or Apple's App Store. Please install one of these authentication applications and scan the QR code on the page below using the app. The authentication app then generates a six-digit number every minute, which must be entered as the second factor in the exchange platform when downloading files.
+      Two-factor authentication (2FA) is enabled for your account. The exchange platform asks for the second factor when downloading files. To use the second factor, the "Google Authenticator" application by Google or the "Duo Mobile" app by CISCO must be installed on a mobile phone. These applications can be found in the Android Play Store or Apple's App Store. Please install one of these authentication applications and scan the QR code on the page below using the app. The authentication app then generates a six-digit number every minute, which must be entered as the second factor in the exchange platform when downloading files.
     </p>
     {% endif %}
     
