@@ -433,6 +433,10 @@ def read_user_token(user):
 
 def create_user_token(user):
     if enable_2fa:
+
+        if has_token(user):
+            return
+        
         if user == 'admin':
             token_file_path = path.join(basedir, "admin.token")
         else:
