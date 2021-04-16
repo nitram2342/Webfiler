@@ -9,9 +9,9 @@
 <script nonce="{{nonce}}">
 function generatePassword() {
 
-  {# Alphabet that avoids: 0O 1I and certain special characters that
+  {# Alphabet that avoids: 0O 1Il and certain special characters that
      people may fail to read when for example passing a password via phone. #}
-  var chars = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ!#$%&()*+,-.:;<=>?@";
+  var chars = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ!#$%&()*+,-.:;<=>?@";
   var randarray = new Uint16Array(12);
   var retval = "";
   window.crypto.getRandomValues(randarray);
