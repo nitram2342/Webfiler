@@ -52,11 +52,10 @@ function post(path, params) {
 
 function check_howto_data_and_enable_button() {
     user = document.getElementById("user").value;
-    password = document.getElementById("password").value;
     
     b = document.getElementById("howto");
     if (b != null) {
-	state = (user != "") && (password != "");
+	state = (user != "");
 	b.disabled = !state;
 	if (state) {
 	    b.className = "edit";
@@ -84,10 +83,13 @@ window.onload = function() {
 	b.oninput = function() { check_howto_data_and_enable_button() };
     }
 
-    check_howto_data_and_enable_button();
+    check_howto_data_and_enable_button(); /* initially, disable how-to buttom */
     
     for (let b of document.getElementsByName("edit")) {
-	b.onclick = function() { document.getElementById('user').value = b.value };
+	b.onclick = function() {
+	    document.getElementById('user').value = b.value
+	    check_howto_data_and_enable_button();
+	};
     }
 
     for (let f of document.getElementsByName("del-confirm")) {
