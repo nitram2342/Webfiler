@@ -305,13 +305,14 @@ def _upload_mandant(user=None, encrypt=False):
                 pathname = path.join(basedir, documentsdir, user_sec, filename)
             else:
                 pathname = path.join(basedir, publicdir, filename)
-            
-            final_filename = store_file(pathname, f.stream, encrypt,
-                                        int(request.form['dzchunkindex']) if enable_chunking else 0,
-                                        int(request.form['dzchunkbyteoffset']) if enable_chunking else 0,
-                                        int(request.form['dztotalchunkcount']) if enable_chunking else 0)
 
-            if enable_mail_notification:
+            chunkindex = int(request.form['dzchunkindex']) if enable_chunking else 0
+            chunkbyteoffset = int(request.form['dzchunkbyteoffset']) if enable_chunking else 0
+            chunkcount = int(request.form['dztotalchunkcount']) if enable_chunking else 0
+            
+            final_filename = store_file(pathname, f.stream, encrypt, chunkindex, chunkbyteoffset, chunkcount)
+
+            if enable_mail_notification and ((chunkindex + 1 == chunkcount) or (enable_chunking is False)):
                 notify_upload_via_mail(user_sec, final_filename)
 
     return make_response(("Data uploaded successfully", 200))
