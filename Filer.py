@@ -352,7 +352,7 @@ def notify_upload_via_mail(user, filename):
     server = smtplib.SMTP_SSL(app.config["SMTPS_HOST"], app.config["SMTPS_PORT"], context=context)
     server.login(app.config["SMTPS_USER"], app.config["SMTPS_PASS"])
 
-    url = request.url_root + documentsdir + "/" + user_sec + "/" + fname_sec
+    url = request.url_root + 'admin/' + documentsdir + "/" + user_sec + "/" + fname_sec
     
     msg = MIMEText(f"Dear {app.config['TITLE']} user,\n\n" + \
                    f"User {user_sec} uploaded file \"{fname_sec}\". Please download it to your computer, because the\n" + \
