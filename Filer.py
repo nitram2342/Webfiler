@@ -296,7 +296,8 @@ def upload_admin():
 
 
 def _upload_mandant(user=None, encrypt=False, upload_as_admin=False):
-    user_sec = secure_filename(user)
+    
+    user_sec = secure_filename(user) if user else None
     
     for key, f in request.files.items():
         if key.startswith("file"):
@@ -516,7 +517,10 @@ def download_file_mandant(user, filename, user_2fa, token_user=None):
 def access_resource(user, filename, user_2fa, token):
     method = request.form.get("_method", "POST")
     if method == "DELETE":
-        return delete_file_mandant(user, filename)
+        if user_2fa == 'admin':
+            return delete_file_mandant_admin(user, filename)
+        else:
+            return delete_file_mandant(user, filename)
     else:
         return download_file_mandant(user, filename, user_2fa, token)
     
