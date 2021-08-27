@@ -314,7 +314,7 @@ def _upload_mandant(user=None, encrypt=False, upload_as_admin=False):
 
             if enable_mail_notification and not upload_as_admin \
                and ((chunkindex + 1 == chunkcount) or (enable_chunking is False)):
-                notify_upload_via_mail(user_sec, filename, upload_as_admin)
+                notify_upload_via_mail(user_sec, filename)
 
     return make_response(("Data uploaded successfully", 200))
 
