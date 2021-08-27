@@ -45,6 +45,7 @@ app.config["DROPZONE_SERVE_LOCAL"] = True
 app.config["DROPZONE_ENABLE_CSRF"] = True
 app.config["DROPZONE_TIMEOUT"] = 600000
 app.config["WTF_CSRF_SSL_STRICT"] = False # Disable looking at referrer
+app.config['WTF_CSRF_TIME_LIMIT'] = None # Set CSRF token validity to session-lifetime
 
 app.config["SESSION_COOKIE_SECURE"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = 'Strict'
