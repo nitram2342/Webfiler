@@ -287,15 +287,15 @@ def upload_mandant_as_mandant(user):
 
 @app.route("/admin/" + documentsdir + "/<user>", methods=["POST"])
 def upload_mandant_as_admin(user):
-    return _upload_mandant(user)
+    return _upload_mandant(user, upload_as_admin=True)
 
 
 @app.route("/admin", methods=["POST"])
 def upload_admin():
-    return _upload_mandant()
+    return _upload_mandant(upload_as_admin=True)
 
 
-def _upload_mandant(user=None, encrypt=False):
+def _upload_mandant(user=None, encrypt=False, upload_as_admin=False):
     user_sec = secure_filename(user)
     
     for key, f in request.files.items():
@@ -312,8 +312,9 @@ def _upload_mandant(user=None, encrypt=False):
             
             store_file(pathname, f.stream, encrypt, chunkindex, chunkbyteoffset, chunkcount)
 
-            if enable_mail_notification and ((chunkindex + 1 == chunkcount) or (enable_chunking is False)):
-                notify_upload_via_mail(user_sec, filename)
+            if enable_mail_notification and not upload_as_admin \
+               and ((chunkindex + 1 == chunkcount) or (enable_chunking is False)):
+                notify_upload_via_mail(user_sec, filename, upload_as_admin)
 
     return make_response(("Data uploaded successfully", 200))
 
