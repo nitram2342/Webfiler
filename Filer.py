@@ -310,10 +310,10 @@ def _upload_mandant(user=None, encrypt=False):
             chunkbyteoffset = int(request.form['dzchunkbyteoffset']) if enable_chunking else 0
             chunkcount = int(request.form['dztotalchunkcount']) if enable_chunking else 0
             
-            final_filename = store_file(pathname, f.stream, encrypt, chunkindex, chunkbyteoffset, chunkcount)
+            store_file(pathname, f.stream, encrypt, chunkindex, chunkbyteoffset, chunkcount)
 
             if enable_mail_notification and ((chunkindex + 1 == chunkcount) or (enable_chunking is False)):
-                notify_upload_via_mail(user_sec, final_filename)
+                notify_upload_via_mail(user_sec, filename)
 
     return make_response(("Data uploaded successfully", 200))
 
@@ -351,7 +351,7 @@ def notify_upload_via_mail(user, filename):
     server = smtplib.SMTP_SSL(app.config["SMTPS_HOST"], app.config["SMTPS_PORT"], context=context)
     server.login(app.config["SMTPS_USER"], app.config["SMTPS_PASS"])
 
-    url = request.url_root + "/" + documentsdir + "/" + user_sec + "/" + fname_sec
+    url = request.url_root + documentsdir + "/" + user_sec + "/" + fname_sec
     
     msg = MIMEText(f"Dear {app.config['TITLE']} user,\n\n" + \
                    f"User {user_sec} uploaded file \"{fname_sec}\". Please download it to your computer, because the\n" + \
