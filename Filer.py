@@ -432,7 +432,7 @@ def read_user_token(user):
         
     with open(token_file, "r", encoding="utf-8") as token_file:
         seed = token_file.readline().rstrip()
-        return pyotp.TOTP(seed)
+        return pyotp.TOTP(seed, interval=60)
 
 def create_user_token(user):
     if enable_2fa:
