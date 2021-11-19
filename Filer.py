@@ -332,6 +332,10 @@ def store_file(pathname, fstream, encrypt, current_chunk, offset, total_chunks):
     else:
         with open(pathname, 'ab') as fh_out:
             fh_out.seek(offset)
+
+            if offset == 0:
+                fh_out.truncate()
+                
             fh_out.write(fstream.read())
             
     return pathname
