@@ -1,2 +1,7 @@
 Daten/
 Daten/**
+*~
+**/*.mo
+venv/
+*.pot
+__pycache__/
