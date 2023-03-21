@@ -1,8 +1,7 @@
 all: install
 
 run: venv/bin/python3 translations/de/LC_MESSAGES/messages.mo translations/en/LC_MESSAGES/messages.mo
-	SECRET_KEY=secret FLASK_ENV=development ENABLE_2FA=False ./venv/bin/python Filer.py -P 5000 --host=0.0.0.0
-	#SECRET_KEY=secret FLASK_ENV=development ./venv/bin/python Filer.py -P 5000
+	SECRET_KEY=secret FLASK_ENV=development ./venv/bin/python Filer.py -P 5000 --host=0.0.0.0
 
 translations/en/LC_MESSAGES/messages.mo: translations/en/LC_MESSAGES/messages.po
 	./venv/bin/pybabel compile -d translations -l en
