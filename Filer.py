@@ -4,13 +4,15 @@ import hashlib
 import base64
 import time
 import io
-from os import unlink, path, getenv, listdir, mkdir, chmod, umask, urandom
+from os import unlink, path, getenv, listdir, mkdir, chmod, umask, urandom, listdir
 from shutil import rmtree
 from threading import Thread
 from random import randint
 from sys import stderr, exit
 import smtplib, ssl
 from email.mime.text import MIMEText
+import pyotp
+import qrcode
 
 from flask import (
     Flask,
@@ -69,9 +71,6 @@ enable_chunking=False # enable for large files
 
 # Enable 2FA for download?
 enable_2fa = getenv("ENABLE_2FA", "True").lower() in ["true", "1"]
-if enable_2fa:
-    import pyotp
-    import qrcode
     
 # Encrypt customer-uploaded data via GPG. It is enabled if there is a
 # fingerprint defined. The key is automatically downloaded from the
@@ -412,6 +411,7 @@ def delete_file_mandant_admin(user, filename):
     return redirect("/admin/" + documentsdir + "/" + secure_filename(user))
 
 
+    
 @app.route("/admin/" + publicdir + "/<path:filename>", methods=["POST"])
 def delete_file_admin(filename):
     method = request.form.get("_method", "POST")
@@ -466,10 +466,13 @@ def create_user_token(user):
 @app.route("/admin/token/toggle-state/<user>", methods=["POST"])
 def admin_toggle_user_token_active(user):
     user_sec = secure_filename(user)
+    # There is a marker file for disabled 2fa token. Disabling 2FA removes this marker.
     path_state = path.join(basedir, clientsdir, user_sec + ".token.disabled")
     if path.exists(path_state):
         unlink(path_state)
     else:
+        # When disabling 2FA delete all files from user.
+        delete_all_files_from_directory(user)
         open(path_state, "w").close()
         
     return redirect("/admin")
@@ -501,7 +504,7 @@ def admin_download_user_token(user):
 
     return send_file(png_path,
                      as_attachment=as_attachment,
-                     attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
+                     download_name="GoogleAuth_QRToken_{}.png".format(user_sec),
                      mimetype="image/png")
     
 
@@ -587,6 +590,12 @@ def make_dir(dir_name):
         mkdir(dir_name)
         chmod(dir_name, 0o700)
 
+def delete_all_files_from_directory(user):
+    user_dir =  path.join(basedir, documentsdir, secure_filename(user))
+    
+    for f in [ f for f in listdir(user_dir) ]:
+        unlink(path.join(user_dir, f))
+    
 
 
 # Main program
