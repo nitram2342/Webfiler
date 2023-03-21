@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-21 18:28+0100\n"
+"POT-Creation-Date: 2023-03-21 23:52+0100\n"
 "PO-Revision-Date: 2020-09-03 17:48+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.0\n"
+"Generated-By: Babel 2.12.1\n"
 
-#: Filer.py:108
+#: Filer.py:119
 msgid ""
 "Ziehe die Dateien hier hin, um sie hochzuladen oder klicken Sie zur "
 "Auswahl."
@@ -26,60 +26,66 @@ msgstr ""
 "Ziehe die Dateien hier hin, um sie hochzuladen oder klicken Sie zur "
 "Auswahl."
 
-#: templates/admin.html:94 templates/admin.html:118 templates/mandant.html:13
+#: templates/admin.html:96 templates/mandant.html:13
 msgid "Sind Sie sicher?"
 msgstr "Sind Sie sicher?"
 
-#: templates/admin.html:127
+#: templates/admin.html:120
+msgid ""
+"Sind Sie sicher? Beim Deaktivieren von 2FA, werden die Datein des Users "
+"gelöscht."
+msgstr ""
+
+#: templates/admin.html:129
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/admin.html:128
+#: templates/admin.html:130
 msgid "Mandanten"
 msgstr "Mandanten"
 
-#: templates/admin.html:133 templates/admin.html:169 templates/mandant.html:66
+#: templates/admin.html:135 templates/admin.html:171 templates/mandant.html:66
 msgid "Löschen"
 msgstr "Löschen"
 
-#: templates/admin.html:135
+#: templates/admin.html:137
 msgid "Editieren"
 msgstr "Editieren"
 
-#: templates/admin.html:138
+#: templates/admin.html:140
 msgid "Download 2FA QR"
 msgstr "2FA-QR Herunterladen"
 
-#: templates/admin.html:141
+#: templates/admin.html:143
 msgid "2FA"
 msgstr "2FA"
 
-#: templates/admin.html:145
+#: templates/admin.html:147
 msgid "Mandanten-URL"
 msgstr "Mandanten-URL"
 
-#: templates/admin.html:152
+#: templates/admin.html:154
 msgid "Generieren"
 msgstr "Generieren"
 
-#: templates/admin.html:153
+#: templates/admin.html:155
 msgid "Kopieren"
 msgstr "Kopieren"
 
-#: templates/admin.html:154
+#: templates/admin.html:156
 msgid "How-to"
 msgstr "Anleitung"
 
-#: templates/admin.html:155
+#: templates/admin.html:157
 #, fuzzy
 msgid "Speichern"
 msgstr "Löschen"
 
-#: templates/admin.html:163
+#: templates/admin.html:165
 msgid "Öffentliche Dokumente"
 msgstr "Öffentliche Dokumente"
 
-#: templates/admin.html:179
+#: templates/admin.html:181
 msgid "Öffentliches Dokument hochladen"
 msgstr "Öffentliches Dokument hochladen"
 

@@ -117,7 +117,7 @@ window.onload = function() {
     }
     
     for (let f of document.getElementsByName("2fa-toggle-confirm")) {
-	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher?")}}'); };
+	f.onsubmit = function() { return confirm('{{_("Sind Sie sicher? Beim Deaktivieren von 2FA, werden die Datein des Users gelöscht.")}}'); };
     }
     {% endif %}
 
