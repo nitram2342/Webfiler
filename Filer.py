@@ -3,7 +3,6 @@
 import hashlib
 import base64
 import time
-import gpgencryption
 import io
 from os import unlink, path, getenv, listdir, mkdir, chmod, umask, urandom
 from shutil import rmtree
@@ -47,7 +46,7 @@ app.config["DROPZONE_TIMEOUT"] = 3600000
 app.config["WTF_CSRF_SSL_STRICT"] = False # Disable looking at referrer
 app.config['WTF_CSRF_TIME_LIMIT'] = None # Set CSRF token validity to session-lifetime
 
-app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_SECURE"] = False # XXXX
 app.config["SESSION_COOKIE_SAMESITE"] = 'Strict'
 
 app.config["ORGANIZATION"] = getenv("ORGANIZATION", "Kanzlei Hubrig")
@@ -69,7 +68,7 @@ app.config["MAX_SIZE"] = "5 GB" # only an information
 enable_chunking=False # enable for large files
 
 # Enable 2FA for download?
-enable_2fa = True
+enable_2fa = getenv("ENABLE_2FA", "True").lower() in ["true", "1"]
 if enable_2fa:
     import pyotp
     import qrcode
@@ -83,19 +82,15 @@ if enable_2fa:
 
 gpg_recipient_fprint = getenv("GPG_RECIPIENT_FPRINT", None) 
 gpg_key_server = getenv("GPG_KEY_SERVER", "keys.openpgp.org")
+if gpg_recipient_fprint:
+    import gpgencryption
+
 
 basedir = getenv("FILER_BASEDIR", "./Daten")
 publicdir = getenv("FILER_PUBLICDIR", "Public")
 documentsdir = getenv("FILER_DOCUMENTSDIR", "Dokumente")
 clientsdir = getenv("FILER_CLIENTSSDIR", "Mandanten")
 gpg_home_dir = path.join(basedir, "gpghome")
-
-### end of config
-
-csrf = CSRFProtect(app)
-dropzone = Dropzone(app)
-babel = Babel(app)
-
 
 nonce = base64.b64encode(urandom(64)).decode("utf8")
 default_http_header = {
@@ -105,6 +100,21 @@ default_http_header = {
     "Referrer-Policy" : "no-referrer"
 }
 
+
+### end of config
+
+csrf = CSRFProtect(app)
+dropzone = Dropzone(app)
+
+
+# Babel initialization
+def get_locale():
+    if not g.get("lang_code", None):
+        g.lang_code = request.accept_languages.best_match(app.config["LANGUAGES"])
+    return g.lang_code
+
+babel = Babel(app)
+babel.init_app(app, locale_selector=get_locale)
 
 def update_dropzone_message():
     app.config["DROPZONE_DEFAULT_MESSAGE"] = _(
@@ -492,8 +502,7 @@ def admin_download_user_token(user):
     return send_file(png_path,
                      as_attachment=as_attachment,
                      attachment_filename="GoogleAuth_QRToken_{}.png".format(user_sec),
-                     mimetype="image/png",
-                     cache_timeout=0)
+                     mimetype="image/png")
     
 
 #### SERVE FILES RULES ####
@@ -513,8 +522,7 @@ def download_file_mandant(user, filename, user_2fa, token_user=None):
     return send_from_directory(
         path.join(basedir, documentsdir),
         path.join(user_sec, secure_filename(filename)),
-        as_attachment = True,
-        cache_timeout=0
+        as_attachment = True
     )
 
 
@@ -579,12 +587,6 @@ def make_dir(dir_name):
         mkdir(dir_name)
         chmod(dir_name, 0o700)
 
-
-@babel.localeselector
-def get_locale():
-    if not g.get("lang_code", None):
-        g.lang_code = request.accept_languages.best_match(app.config["LANGUAGES"])
-    return g.lang_code
 
 
 # Main program
