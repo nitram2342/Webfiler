@@ -1,1 +1,494 @@
-<?xml version="1.0" encoding="UTF-8"?><bom xmlns="http://cyclonedx.org/schema/bom/1.4" version="1" serialNumber="urn:uuid:4259d1ff-03cf-4fe3-bd7e-515e01d622b6"><metadata><timestamp>2023-03-21T22:05:52.613035+00:00</timestamp><tools><tool><vendor>CycloneDX</vendor><name>cyclonedx-bom</name><version>3.6.3</version></tool><tool><vendor>CycloneDX</vendor><name>cyclonedx-python-lib</name><version>3.1.0</version><externalReferences><reference type="build-system"><url>https://github.com/CycloneDX/cyclonedx-python-lib/actions</url></reference><reference type="distribution"><url>https://pypi.org/project/cyclonedx-python-lib/</url></reference><reference type="documentation"><url>https://cyclonedx.github.io/cyclonedx-python-lib/</url></reference><reference type="issue-tracker"><url>https://github.com/CycloneDX/cyclonedx-python-lib/issues</url></reference><reference type="license"><url>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE</url></reference><reference type="release-notes"><url>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md</url></reference><reference type="vcs"><url>https://github.com/CycloneDX/cyclonedx-python-lib</url></reference><reference type="website"><url>https://cyclonedx.org</url></reference></externalReferences></tool></tools></metadata><components><component type="library" bom-ref="3c17e41e-9e0c-40d6-9bfb-b45c62574a80"><name>Babel</name><version>2.12.1</version><purl>pkg:pypi/babel@2.12.1</purl></component><component type="library" bom-ref="fd788523-e011-4ad8-9dc9-4358947397df"><name>Flask</name><version>2.2.3</version><purl>pkg:pypi/flask@2.2.3</purl></component><component type="library" bom-ref="5e928371-5d8f-484b-8786-68f79df82c7a"><name>Flask-Dropzone</name><version>1.6.0</version><purl>pkg:pypi/flask-dropzone@1.6.0</purl></component><component type="library" bom-ref="e5a2fb27-b8c5-4e5d-a44e-67c33727ddae"><name>Flask-WTF</name><version>1.1.1</version><purl>pkg:pypi/flask-wtf@1.1.1</purl></component><component type="library" bom-ref="2fcbcbe4-cace-4c8e-8a1c-b361ea00ba4b"><name>Jinja2</name><version>3.1.2</version><purl>pkg:pypi/jinja2@3.1.2</purl></component><component type="library" bom-ref="4fad2cb1-11ed-45af-8db3-602fbbfceb91"><name>MarkupSafe</name><version>2.1.2</version><purl>pkg:pypi/markupsafe@2.1.2</purl></component><component type="library" bom-ref="9ca13b3e-1695-4b04-bfe8-534d534473c1"><name>Pillow</name><version>9.4.0</version><purl>pkg:pypi/pillow@9.4.0</purl></component><component type="library" bom-ref="c2a43824-d525-4d9b-b4c8-341933583c44"><name>WTForms</name><version>3.0.1</version><purl>pkg:pypi/wtforms@3.0.1</purl></component><component type="library" bom-ref="a9d0a165-8e4c-4f6e-86e7-338180077dba"><name>Werkzeug</name><version>2.2.3</version><purl>pkg:pypi/werkzeug@2.2.3</purl></component><component type="library" bom-ref="a66fe9c9-06b6-4b39-827d-218a91bce916"><name>click</name><version>8.1.3</version><purl>pkg:pypi/click@8.1.3</purl></component><component type="library" bom-ref="f3b86dac-5b56-4ee2-be4f-87973ebda51b"><name>flask-babel</name><version>3.0.1</version><purl>pkg:pypi/flask-babel@3.0.1</purl></component><component type="library" bom-ref="79063fab-5293-431e-aab1-dc4361e408a3"><name>importlib-metadata</name><version>6.1.0</version><purl>pkg:pypi/importlib-metadata@6.1.0</purl></component><component type="library" bom-ref="751be149-a082-4747-a16e-0908e8b5682a"><name>itsdangerous</name><version>2.1.2</version><purl>pkg:pypi/itsdangerous@2.1.2</purl></component><component type="library" bom-ref="3b97928d-59dc-469f-850f-b3000e7f0530"><name>pkg_resources</name><version>0.0.0</version><purl>pkg:pypi/pkg-resources@0.0.0</purl></component><component type="library" bom-ref="a5fde769-de20-41af-ac73-8c98e9aba966"><name>pyotp</name><version>2.8.0</version><purl>pkg:pypi/pyotp@2.8.0</purl></component><component type="library" bom-ref="224e3856-d510-402c-88b6-acf4e49e117e"><name>pypng</name><version>0.20220715.0</version><purl>pkg:pypi/pypng@0.20220715.0</purl></component><component type="library" bom-ref="bf5dcace-82da-4454-b12c-f1ed54ef84e6"><name>python-gnupg</name><version>0.5.0</version><purl>pkg:pypi/python-gnupg@0.5.0</purl></component><component type="library" bom-ref="235b70ce-712a-4eba-9c47-52d2e10cadf5"><name>pytz</name><version>2022.7.1</version><purl>pkg:pypi/pytz@2022.7.1</purl></component><component type="library" bom-ref="11fc8bab-aa0c-4cb2-a302-70d5e86ae9a5"><name>qrcode</name><version>7.4.2</version><purl>pkg:pypi/qrcode@7.4.2</purl></component><component type="library" bom-ref="33e892c1-ad0a-4118-96ea-fed15687b5cd"><name>typing_extensions</name><version>4.5.0</version><purl>pkg:pypi/typing-extensions@4.5.0</purl></component><component type="library" bom-ref="ddd37330-0d5d-4732-92f0-2c2fb4683de9"><name>zipp</name><version>3.15.0</version><purl>pkg:pypi/zipp@3.15.0</purl></component></components><dependencies><dependency ref="3c17e41e-9e0c-40d6-9bfb-b45c62574a80" /><dependency ref="fd788523-e011-4ad8-9dc9-4358947397df" /><dependency ref="5e928371-5d8f-484b-8786-68f79df82c7a" /><dependency ref="e5a2fb27-b8c5-4e5d-a44e-67c33727ddae" /><dependency ref="2fcbcbe4-cace-4c8e-8a1c-b361ea00ba4b" /><dependency ref="4fad2cb1-11ed-45af-8db3-602fbbfceb91" /><dependency ref="9ca13b3e-1695-4b04-bfe8-534d534473c1" /><dependency ref="c2a43824-d525-4d9b-b4c8-341933583c44" /><dependency ref="a9d0a165-8e4c-4f6e-86e7-338180077dba" /><dependency ref="a66fe9c9-06b6-4b39-827d-218a91bce916" /><dependency ref="f3b86dac-5b56-4ee2-be4f-87973ebda51b" /><dependency ref="79063fab-5293-431e-aab1-dc4361e408a3" /><dependency ref="751be149-a082-4747-a16e-0908e8b5682a" /><dependency ref="3b97928d-59dc-469f-850f-b3000e7f0530" /><dependency ref="a5fde769-de20-41af-ac73-8c98e9aba966" /><dependency ref="224e3856-d510-402c-88b6-acf4e49e117e" /><dependency ref="bf5dcace-82da-4454-b12c-f1ed54ef84e6" /><dependency ref="235b70ce-712a-4eba-9c47-52d2e10cadf5" /><dependency ref="11fc8bab-aa0c-4cb2-a302-70d5e86ae9a5" /><dependency ref="33e892c1-ad0a-4118-96ea-fed15687b5cd" /><dependency ref="ddd37330-0d5d-4732-92f0-2c2fb4683de9" /></dependencies></bom>
+{
+  "components": [
+    {
+      "bom-ref": "requirements-L4",
+      "description": "requirements line 4: Flask==3.1.2",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/Flask/"
+        }
+      ],
+      "name": "Flask",
+      "purl": "pkg:pypi/flask@3.1.2",
+      "type": "library",
+      "version": "3.1.2"
+    },
+    {
+      "bom-ref": "requirements-L6",
+      "description": "requirements line 6: Flask-Dropzone==2.0.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/Flask-Dropzone/"
+        }
+      ],
+      "name": "Flask-Dropzone",
+      "purl": "pkg:pypi/flask-dropzone@2.0.0",
+      "type": "library",
+      "version": "2.0.0"
+    },
+    {
+      "bom-ref": "requirements-L7",
+      "description": "requirements line 7: Flask-WTF==1.2.2",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/Flask-WTF/"
+        }
+      ],
+      "name": "Flask-WTF",
+      "purl": "pkg:pypi/flask-wtf@1.2.2",
+      "type": "library",
+      "version": "1.2.2"
+    },
+    {
+      "bom-ref": "requirements-L10",
+      "description": "requirements line 10: Jinja2==3.1.6",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/Jinja2/"
+        }
+      ],
+      "name": "Jinja2",
+      "purl": "pkg:pypi/jinja2@3.1.6",
+      "type": "library",
+      "version": "3.1.6"
+    },
+    {
+      "bom-ref": "requirements-L11",
+      "description": "requirements line 11: MarkupSafe==3.0.3",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/MarkupSafe/"
+        }
+      ],
+      "name": "MarkupSafe",
+      "purl": "pkg:pypi/markupsafe@3.0.3",
+      "type": "library",
+      "version": "3.0.3"
+    },
+    {
+      "bom-ref": "requirements-L20",
+      "description": "requirements line 20: WTForms==3.2.1",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/WTForms/"
+        }
+      ],
+      "name": "WTForms",
+      "purl": "pkg:pypi/wtforms@3.2.1",
+      "type": "library",
+      "version": "3.2.1"
+    },
+    {
+      "bom-ref": "requirements-L19",
+      "description": "requirements line 19: Werkzeug==3.1.3",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/Werkzeug/"
+        }
+      ],
+      "name": "Werkzeug",
+      "purl": "pkg:pypi/werkzeug@3.1.3",
+      "type": "library",
+      "version": "3.1.3"
+    },
+    {
+      "bom-ref": "requirements-L1",
+      "description": "requirements line 1: babel==2.17.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/babel/"
+        }
+      ],
+      "name": "babel",
+      "purl": "pkg:pypi/babel@2.17.0",
+      "type": "library",
+      "version": "2.17.0"
+    },
+    {
+      "bom-ref": "requirements-L2",
+      "description": "requirements line 2: blinker==1.9.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/blinker/"
+        }
+      ],
+      "name": "blinker",
+      "purl": "pkg:pypi/blinker@1.9.0",
+      "type": "library",
+      "version": "1.9.0"
+    },
+    {
+      "bom-ref": "requirements-L3",
+      "description": "requirements line 3: click==8.3.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/click/"
+        }
+      ],
+      "name": "click",
+      "purl": "pkg:pypi/click@8.3.0",
+      "type": "library",
+      "version": "8.3.0"
+    },
+    {
+      "bom-ref": "requirements-L5",
+      "description": "requirements line 5: flask-babel==4.0.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/flask-babel/"
+        }
+      ],
+      "name": "flask-babel",
+      "purl": "pkg:pypi/flask-babel@4.0.0",
+      "type": "library",
+      "version": "4.0.0"
+    },
+    {
+      "bom-ref": "requirements-L8",
+      "description": "requirements line 8: importlib_metadata==8.7.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/importlib_metadata/"
+        }
+      ],
+      "name": "importlib_metadata",
+      "purl": "pkg:pypi/importlib-metadata@8.7.0",
+      "type": "library",
+      "version": "8.7.0"
+    },
+    {
+      "bom-ref": "requirements-L9",
+      "description": "requirements line 9: itsdangerous==2.2.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/itsdangerous/"
+        }
+      ],
+      "name": "itsdangerous",
+      "purl": "pkg:pypi/itsdangerous@2.2.0",
+      "type": "library",
+      "version": "2.2.0"
+    },
+    {
+      "bom-ref": "requirements-L12",
+      "description": "requirements line 12: pillow==11.3.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pillow/"
+        }
+      ],
+      "name": "pillow",
+      "purl": "pkg:pypi/pillow@11.3.0",
+      "type": "library",
+      "version": "11.3.0"
+    },
+    {
+      "bom-ref": "requirements-L13",
+      "description": "requirements line 13: pyotp==2.9.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pyotp/"
+        }
+      ],
+      "name": "pyotp",
+      "purl": "pkg:pypi/pyotp@2.9.0",
+      "type": "library",
+      "version": "2.9.0"
+    },
+    {
+      "bom-ref": "requirements-L14",
+      "description": "requirements line 14: pypng==0.20220715.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pypng/"
+        }
+      ],
+      "name": "pypng",
+      "purl": "pkg:pypi/pypng@0.20220715.0",
+      "type": "library",
+      "version": "0.20220715.0"
+    },
+    {
+      "bom-ref": "requirements-L15",
+      "description": "requirements line 15: python-gnupg==0.5.5",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/python-gnupg/"
+        }
+      ],
+      "name": "python-gnupg",
+      "purl": "pkg:pypi/python-gnupg@0.5.5",
+      "type": "library",
+      "version": "0.5.5"
+    },
+    {
+      "bom-ref": "requirements-L16",
+      "description": "requirements line 16: pytz==2025.2",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pytz/"
+        }
+      ],
+      "name": "pytz",
+      "purl": "pkg:pypi/pytz@2025.2",
+      "type": "library",
+      "version": "2025.2"
+    },
+    {
+      "bom-ref": "requirements-L17",
+      "description": "requirements line 17: qrcode==8.2",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/qrcode/"
+        }
+      ],
+      "name": "qrcode",
+      "purl": "pkg:pypi/qrcode@8.2",
+      "type": "library",
+      "version": "8.2"
+    },
+    {
+      "bom-ref": "requirements-L18",
+      "description": "requirements line 18: typing_extensions==4.15.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/typing_extensions/"
+        }
+      ],
+      "name": "typing_extensions",
+      "purl": "pkg:pypi/typing-extensions@4.15.0",
+      "type": "library",
+      "version": "4.15.0"
+    },
+    {
+      "bom-ref": "requirements-L21",
+      "description": "requirements line 21: zipp==3.23.0",
+      "externalReferences": [
+        {
+          "comment": "implicit dist url",
+          "type": "distribution",
+          "url": "https://pypi.org/simple/zipp/"
+        }
+      ],
+      "name": "zipp",
+      "purl": "pkg:pypi/zipp@3.23.0",
+      "type": "library",
+      "version": "3.23.0"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "requirements-L1"
+    },
+    {
+      "ref": "requirements-L10"
+    },
+    {
+      "ref": "requirements-L11"
+    },
+    {
+      "ref": "requirements-L12"
+    },
+    {
+      "ref": "requirements-L13"
+    },
+    {
+      "ref": "requirements-L14"
+    },
+    {
+      "ref": "requirements-L15"
+    },
+    {
+      "ref": "requirements-L16"
+    },
+    {
+      "ref": "requirements-L17"
+    },
+    {
+      "ref": "requirements-L18"
+    },
+    {
+      "ref": "requirements-L19"
+    },
+    {
+      "ref": "requirements-L2"
+    },
+    {
+      "ref": "requirements-L20"
+    },
+    {
+      "ref": "requirements-L21"
+    },
+    {
+      "ref": "requirements-L3"
+    },
+    {
+      "ref": "requirements-L4"
+    },
+    {
+      "ref": "requirements-L5"
+    },
+    {
+      "ref": "requirements-L6"
+    },
+    {
+      "ref": "requirements-L7"
+    },
+    {
+      "ref": "requirements-L8"
+    },
+    {
+      "ref": "requirements-L9"
+    }
+  ],
+  "metadata": {
+    "timestamp": "2025-10-11T13:46:08.364020+00:00",
+    "tools": {
+      "components": [
+        {
+          "description": "CycloneDX Software Bill of Materials (SBOM) generator for Python projects and environments",
+          "externalReferences": [
+            {
+              "type": "build-system",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/actions"
+            },
+            {
+              "type": "distribution",
+              "url": "https://pypi.org/project/cyclonedx-bom/"
+            },
+            {
+              "type": "documentation",
+              "url": "https://cyclonedx-bom-tool.readthedocs.io/"
+            },
+            {
+              "type": "issue-tracker",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/issues"
+            },
+            {
+              "type": "license",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/blob/main/LICENSE"
+            },
+            {
+              "type": "release-notes",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/blob/main/CHANGELOG.md"
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/"
+            },
+            {
+              "type": "website",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/#readme"
+            }
+          ],
+          "group": "CycloneDX",
+          "licenses": [
+            {
+              "license": {
+                "acknowledgement": "declared",
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "name": "cyclonedx-py",
+          "type": "application",
+          "version": "6.0.0"
+        },
+        {
+          "description": "Python library for CycloneDX",
+          "externalReferences": [
+            {
+              "type": "build-system",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/actions"
+            },
+            {
+              "type": "distribution",
+              "url": "https://pypi.org/project/cyclonedx-python-lib/"
+            },
+            {
+              "type": "documentation",
+              "url": "https://cyclonedx-python-library.readthedocs.io/"
+            },
+            {
+              "type": "issue-tracker",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/issues"
+            },
+            {
+              "type": "license",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE"
+            },
+            {
+              "type": "release-notes",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md"
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib"
+            },
+            {
+              "type": "website",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/#readme"
+            }
+          ],
+          "group": "CycloneDX",
+          "licenses": [
+            {
+              "license": {
+                "acknowledgement": "declared",
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "name": "cyclonedx-python-lib",
+          "type": "library",
+          "version": "10.0.0"
+        }
+      ]
+    }
+  },
+  "serialNumber": "urn:uuid:d3189c4e-bd0b-4c79-b59a-426d5c4fbac7",
+  "version": 1,
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6"
+}
