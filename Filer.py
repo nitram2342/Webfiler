@@ -3,8 +3,7 @@
 import hashlib
 import base64
 import time
-import io
-from os import unlink, path, getenv, listdir, mkdir, chmod, umask, urandom, listdir
+from os import unlink, path, getenv, mkdir, chmod, umask, urandom, listdir
 from shutil import rmtree
 from threading import Thread
 from random import randint
@@ -17,7 +16,6 @@ import qrcode
 from flask import (
     Flask,
     render_template,
-    jsonify,
     request,
     redirect,
     send_from_directory,
@@ -28,7 +26,7 @@ from flask import (
 )
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_dropzone import Dropzone
-from flask_babel import Babel, _, refresh
+from flask_babel import Babel, _
 from argparse import ArgumentParser
 from werkzeug.utils import secure_filename
 
@@ -55,6 +53,7 @@ app.config["ORGANIZATION"] = getenv("ORGANIZATION", "Kanzlei Hubrig")
 app.config["TITLE"] = "Filer"
 app.config["LANGUAGES"] = ["en", "de"]
 
+app.config["TOTP_VALID_TIME_WINDOW"] = 30
 
 app.config["SMTPS_HOST"] = getenv("SMTPS_HOST")
 app.config["SMTPS_PORT"] = int(getenv("SMTPS_PORT", "465"))
@@ -231,7 +230,7 @@ def admin_newuser():
         return "Username or password missing", 400
     
     if user == "admin":
-        return abort("403")
+        return abort(403)
 
     salt = urandom(4)
     sha = hashlib.sha1(password.encode("utf-8"))
@@ -519,7 +518,7 @@ def download_file_mandant(user, filename, user_2fa, token_user=None):
     if user_token_enabled(user_2fa_sec):
         token = read_user_token(user_2fa_sec)
         assert(token)
-        if token is None or token.now() != token_user:
+        if token is None or not token.verify(token_user, valid_window=app.config["TOTP_VALID_TIME_WINDOW"]):
             return abort(403)
     
     return send_from_directory(
