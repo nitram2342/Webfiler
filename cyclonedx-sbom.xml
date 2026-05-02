@@ -2,7 +2,7 @@
   "components": [
     {
       "bom-ref": "requirements-L4",
-      "description": "requirements line 4: Flask==3.1.2",
+      "description": "requirements line 4: Flask==3.1.3",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -11,9 +11,9 @@
         }
       ],
       "name": "Flask",
-      "purl": "pkg:pypi/flask@3.1.2",
+      "purl": "pkg:pypi/flask@3.1.3",
       "type": "library",
-      "version": "3.1.2"
+      "version": "3.1.3"
     },
     {
       "bom-ref": "requirements-L6",
@@ -32,7 +32,7 @@
     },
     {
       "bom-ref": "requirements-L7",
-      "description": "requirements line 7: Flask-WTF==1.2.2",
+      "description": "requirements line 7: Flask-WTF==1.3.0",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -41,9 +41,9 @@
         }
       ],
       "name": "Flask-WTF",
-      "purl": "pkg:pypi/flask-wtf@1.2.2",
+      "purl": "pkg:pypi/flask-wtf@1.3.0",
       "type": "library",
-      "version": "1.2.2"
+      "version": "1.3.0"
     },
     {
       "bom-ref": "requirements-L10",
@@ -92,7 +92,7 @@
     },
     {
       "bom-ref": "requirements-L19",
-      "description": "requirements line 19: Werkzeug==3.1.3",
+      "description": "requirements line 19: Werkzeug==3.1.8",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -101,13 +101,13 @@
         }
       ],
       "name": "Werkzeug",
-      "purl": "pkg:pypi/werkzeug@3.1.3",
+      "purl": "pkg:pypi/werkzeug@3.1.8",
       "type": "library",
-      "version": "3.1.3"
+      "version": "3.1.8"
     },
     {
       "bom-ref": "requirements-L1",
-      "description": "requirements line 1: babel==2.17.0",
+      "description": "requirements line 1: babel==2.18.0",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -116,9 +116,9 @@
         }
       ],
       "name": "babel",
-      "purl": "pkg:pypi/babel@2.17.0",
+      "purl": "pkg:pypi/babel@2.18.0",
       "type": "library",
-      "version": "2.17.0"
+      "version": "2.18.0"
     },
     {
       "bom-ref": "requirements-L2",
@@ -137,7 +137,7 @@
     },
     {
       "bom-ref": "requirements-L3",
-      "description": "requirements line 3: click==8.3.0",
+      "description": "requirements line 3: click==8.3.3",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -146,9 +146,9 @@
         }
       ],
       "name": "click",
-      "purl": "pkg:pypi/click@8.3.0",
+      "purl": "pkg:pypi/click@8.3.3",
       "type": "library",
-      "version": "8.3.0"
+      "version": "8.3.3"
     },
     {
       "bom-ref": "requirements-L5",
@@ -167,7 +167,7 @@
     },
     {
       "bom-ref": "requirements-L8",
-      "description": "requirements line 8: importlib_metadata==8.7.0",
+      "description": "requirements line 8: importlib_metadata==9.0.0",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -176,9 +176,9 @@
         }
       ],
       "name": "importlib_metadata",
-      "purl": "pkg:pypi/importlib-metadata@8.7.0",
+      "purl": "pkg:pypi/importlib-metadata@9.0.0",
       "type": "library",
-      "version": "8.7.0"
+      "version": "9.0.0"
     },
     {
       "bom-ref": "requirements-L9",
@@ -197,7 +197,7 @@
     },
     {
       "bom-ref": "requirements-L12",
-      "description": "requirements line 12: pillow==11.3.0",
+      "description": "requirements line 12: pillow==12.2.0",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -206,9 +206,9 @@
         }
       ],
       "name": "pillow",
-      "purl": "pkg:pypi/pillow@11.3.0",
+      "purl": "pkg:pypi/pillow@12.2.0",
       "type": "library",
-      "version": "11.3.0"
+      "version": "12.2.0"
     },
     {
       "bom-ref": "requirements-L13",
@@ -242,7 +242,7 @@
     },
     {
       "bom-ref": "requirements-L15",
-      "description": "requirements line 15: python-gnupg==0.5.5",
+      "description": "requirements line 15: python-gnupg==0.5.6",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -251,13 +251,13 @@
         }
       ],
       "name": "python-gnupg",
-      "purl": "pkg:pypi/python-gnupg@0.5.5",
+      "purl": "pkg:pypi/python-gnupg@0.5.6",
       "type": "library",
-      "version": "0.5.5"
+      "version": "0.5.6"
     },
     {
       "bom-ref": "requirements-L16",
-      "description": "requirements line 16: pytz==2025.2",
+      "description": "requirements line 16: pytz==2026.1.post1",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -266,9 +266,9 @@
         }
       ],
       "name": "pytz",
-      "purl": "pkg:pypi/pytz@2025.2",
+      "purl": "pkg:pypi/pytz@2026.1.post1",
       "type": "library",
-      "version": "2025.2"
+      "version": "2026.1.post1"
     },
     {
       "bom-ref": "requirements-L17",
@@ -302,7 +302,7 @@
     },
     {
       "bom-ref": "requirements-L21",
-      "description": "requirements line 21: zipp==3.23.0",
+      "description": "requirements line 21: zipp==3.23.1",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -311,9 +311,9 @@
         }
       ],
       "name": "zipp",
-      "purl": "pkg:pypi/zipp@3.23.0",
+      "purl": "pkg:pypi/zipp@3.23.1",
       "type": "library",
-      "version": "3.23.0"
+      "version": "3.23.1"
     }
   ],
   "dependencies": [
@@ -382,7 +382,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2025-10-11T13:46:08.364020+00:00",
+    "timestamp": "2026-05-02T14:51:49.681777+00:00",
     "tools": {
       "components": [
         {
@@ -486,7 +486,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:d3189c4e-bd0b-4c79-b59a-426d5c4fbac7",
+  "serialNumber": "urn:uuid:879f539b-4287-48ab-950d-355e74964104",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
