@@ -29,7 +29,7 @@ msgstr "Are you sure?"
 
 #: templates/admin.html:120
 msgid "Sind Sie sicher? Beim Deaktivieren von 2FA, werden die Datein des Users gelöscht."
-msgstr "Are you sure? When deactivating 2FA, the user's files are deleted."
+msgstr "Are you sure? When deactivating 2FA, the user\'s files are deleted."
 
 #: templates/admin.html:129
 msgid "Administration"
