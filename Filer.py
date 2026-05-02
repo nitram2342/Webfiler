@@ -44,9 +44,9 @@ app.config["DROPZONE_SERVE_LOCAL"] = True
 app.config["DROPZONE_ENABLE_CSRF"] = True
 app.config["DROPZONE_TIMEOUT"] = 3600000
 app.config["WTF_CSRF_SSL_STRICT"] = False # Disable looking at referrer
-app.config['WTF_CSRF_TIME_LIMIT'] = None # Set CSRF token validity to session-lifetime
+app.config['WTF_CSRF_TIME_LIMIT'] = None  # Set CSRF token validity to session-lifetime
 
-app.config["SESSION_COOKIE_SECURE"] = False # XXXX
+app.config["SESSION_COOKIE_SECURE"] = True # Is not used
 app.config["SESSION_COOKIE_SAMESITE"] = 'Strict'
 
 app.config["ORGANIZATION"] = getenv("ORGANIZATION", "Kanzlei Hubrig")
@@ -65,8 +65,7 @@ enable_mail_notification = True
 
 filettl = int(getenv("FILER_FILETTL", 10))  # file lifetime in days
 support_public_docs = True
-app.config["MAX_SIZE"] = "5 GB" # only an information
-enable_chunking=False # enable for large files
+enable_chunking = getenv("ENABLE_CHUNKING", "False").lower() in ["true", "1"] # enable for large files
 
 # Enable 2FA for download?
 enable_2fa = getenv("ENABLE_2FA", "True").lower() in ["true", "1"]
@@ -184,6 +183,8 @@ def admin_dokumente(user):
 def admin_user_howto():
     user_sec = secure_filename(request.form.get("user",""))
     password = request.form.get("password")
+
+    size = app.config['DROPZONE_MAX_FILE_SIZE']
     
     return (
         render_template(
@@ -191,7 +192,7 @@ def admin_user_howto():
             user=user_sec,
             password=password,
             url=request.url_root + documentsdir + "/" + user_sec,
-            max_size=app.config["MAX_SIZE"],
+            max_size="%d MB" % size if size <= 1024 else "%d GB" % (size/1024),
             filettl=filettl,
             organization=app.config["ORGANIZATION"],
             title=app.config["TITLE"],
